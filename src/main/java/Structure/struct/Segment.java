@@ -14,7 +14,7 @@ public class Segment {
     public Segment(int maxDataNum) {
         firstBlockNumber = lastBlockNumber + 1;
 
-        this.datas = new ArrayList<Data>(maxDataNum);
+        this.datas = new ArrayList<>(maxDataNum);
         currentDataNum = 0;
     }
 }

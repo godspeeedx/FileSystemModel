@@ -16,12 +16,15 @@ public class Data {
     public boolean isType() {
         return type;
     }
+
     public String getName() {
         return name;
     }
+
     public int getSize() {
         return size;
     }
+
     public String toString() {
         return "Data{" +
                 "type=" + type +
@@ -34,14 +37,18 @@ public class Data {
     public void setType(boolean type) {
         this.type = type;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public void setSize(int size) {
         this.size = size;
     }
+
     /**
      * Увеличить (уменьшить) размер файла на заданную велечину
+     *
      * @param size
      */
     public void addSize(int size) {
