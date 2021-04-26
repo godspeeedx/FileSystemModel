@@ -3,37 +3,18 @@ package Structure.struct;
 import java.util.ArrayList;
 
 public class Segment {
-    int ID;
-    int firstBlockNumber;
-    ArrayList<Data> datas;
+    static int lastBlockNumber = 0;
 
-    public Segment(int ID, int firstBlockNumber) {
-        this.ID = ID;
-        this.firstBlockNumber = firstBlockNumber;
-        this.datas = new ArrayList<Data>();
-    }
+    public int firstBlockNumber;
 
-    public int getID() {
-        return ID;
-    }
+    public ArrayList<Data> datas;
+    public int currentDataNum;
 
-    public int getFirstBlockNumber() {
-        return firstBlockNumber;
-    }
 
-    public ArrayList<Data> getDatas() {
-        return datas;
-    }
+    public Segment(int maxDataNum) {
+        firstBlockNumber = lastBlockNumber + 1;
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public void setFirstBlockNumber(int firstBlockNumber) {
-        this.firstBlockNumber = firstBlockNumber;
-    }
-
-    public void setDatas(ArrayList<Data> datas) {
-        this.datas = datas;
+        this.datas = new ArrayList<Data>(maxDataNum);
+        currentDataNum = 0;
     }
 }

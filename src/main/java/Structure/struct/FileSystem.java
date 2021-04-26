@@ -3,20 +3,29 @@ package Structure.struct;
 import java.util.ArrayList;
 
 public class FileSystem {
-    /***
-     * Имя тома
-     */
-    String systemName;
-    int maxSegmentNum;
-    ArrayList<Segment> segments;
-    int systemSize;
-    int dataNum;
+    public String systemName;
+    public int systemSize;
 
-    public FileSystem(String systemName, int maxSegmentNum, int systemSize, int dataNum) {
+    public int maxSegmentNum;
+    public ArrayList<Segment> segments;
+    public int maxDataNum;
+
+    public FileSystem(int maxSegmentNum, String systemName) {
         this.systemName = systemName;
+        this.systemSize = systemSize;
+
         this.maxSegmentNum = maxSegmentNum;
         this.segments = new ArrayList<Segment>();
-        this.systemSize = systemSize;
-        this.dataNum = dataNum;
+        this.maxDataNum = maxDataNum;
+    }
+
+    @Override
+    public String toString() {
+        return "FileSystem{" +
+                "systemName='" + systemName + '\'' +
+                ", systemSize=" + systemSize +
+                ", maxSegmentNum=" + maxSegmentNum +
+                ", maxDataNum=" + maxDataNum +
+                '}';
     }
 }
