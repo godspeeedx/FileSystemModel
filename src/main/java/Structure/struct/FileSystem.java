@@ -10,12 +10,12 @@ public class FileSystem {
     public ArrayList<Segment> segments;
     public int maxDataNum;
 
-    public FileSystem(int maxSegmentNum, String systemName) {
+    public FileSystem(String systemName, int systemSize, int maxSegmentNum, int maxDataNum) {
         this.systemName = systemName;
         this.systemSize = systemSize;
 
         this.maxSegmentNum = maxSegmentNum;
-        this.segments = new ArrayList<Segment>();
+        this.segments = new ArrayList<>();
         this.maxDataNum = maxDataNum;
     }
 
