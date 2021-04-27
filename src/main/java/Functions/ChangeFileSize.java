@@ -16,21 +16,6 @@ import java.util.Scanner;
  */
 public class ChangeFileSize implements iCommand {
 
-    public static boolean checkFileExsist(FileSystem fs, String fileName) {
-        boolean findName = false;
-
-        flag:
-        for (int i = 0; i < fs.segments.size(); i++) {
-            for (int j = 0; j < fs.segments.get(i).datas.size(); j++) {
-                if (fs.segments.get(i).datas.get(j).getName().equals(fileName)) {
-                    findName = true;
-                    break flag;
-                }
-            }
-        }
-        return findName;
-    }
-
     @Override
     public void Execute(FileSystem fs) {
         boolean check = true;
@@ -49,7 +34,7 @@ public class ChangeFileSize implements iCommand {
             }
         }
 
-        if (checkFileExsist(fs, fileName) == false) {
+        if (methodsForFunctions.checkFileExist(fs, fileName) == false) {
             System.out.println("Файл с данным именем не найден");
             return;
         } else {

@@ -3,7 +3,7 @@ package Structure.struct;
 import java.util.ArrayList;
 
 public class Segment {
-    static int lastBlockNumber = 0; // Последний зан я тый блок во всей файловой системе
+    static public  int lastBlockNumber = 0; // Последний занятый блок во всей файловой системе
     static public final  int lengthSegment = 10;
     public int firstBlockNumber; //Номер блока с которого начинаются файлы сегмента
 
