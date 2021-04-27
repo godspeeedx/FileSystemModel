@@ -5,7 +5,7 @@ import Structure.struct.*;
 
 public class MonitorClass {
     FileSystem fs;
-    iCommand actualCommand = new CreateFile();
+    iCommand actualCommand ;
 
     public void createSystem(){
         actualCommand = new CreateSystem();

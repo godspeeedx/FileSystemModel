@@ -3,12 +3,12 @@ package Structure.struct;
 import java.util.ArrayList;
 
 public class FileSystem {
-    public String systemName;
-    public int systemSize;
+    public String systemName; // имя файловой системы
+    public int systemSize; // количество блоков
 
-    public int maxSegmentNum;
-    public ArrayList<Segment> segments;
-    public int maxDataNum;
+    public int maxSegmentNum; // максимальное число сегментов
+    public ArrayList<Segment> segments; // Массив сегментов
+    public int maxDataNum; // Число записей в каждом сегменте(максимальная длина сегмента )
 
     public FileSystem(String systemName, int systemSize, int maxSegmentNum, int maxDataNum) {
         this.systemName = systemName;
