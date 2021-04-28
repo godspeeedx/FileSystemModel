@@ -1,5 +1,5 @@
 package Structure.struct;
 
 public interface iMonitor {
-    void WriteMessage(String str);
+    void WriteMessage(String str);//
 }
