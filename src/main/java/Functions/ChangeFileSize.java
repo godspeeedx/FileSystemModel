@@ -1,7 +1,6 @@
 package Functions;
 
 import Structure.struct.FileSystem;
-import Structure.struct.Segment;
 import Structure.struct.iCommand;
 
 import java.util.Scanner;
@@ -34,13 +33,19 @@ public class ChangeFileSize implements iCommand {
             }
         }
 
-        if (methodsForFunctions.checkFileExist(fs, fileName) == false) {
-            System.out.println("Файл с данным именем не найден");
-            return;
-        } else {
+            if(DeleteFile.deleteFile(fs, fileName)){
+               int isFileCreate = CreateFile.createFile(fs, fileName, newLength);
+                if (isFileCreate == 0) {
+                    System.out.println("Файл успешно создан");
+                } else if (isFileCreate == -1) {
+                    System.out.println("Недостаточно свободного места");
+                } else if (isFileCreate == 1) {
+                    System.out.println("Файл уже существует");
+                }
+            } else {
+                System.out.println("Файл с данным именем не найден");
+            }
 
-
-        }
     }
 
 

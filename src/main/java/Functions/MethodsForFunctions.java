@@ -3,7 +3,7 @@ package Functions;
 import Structure.struct.FileSystem;
 import Structure.struct.Segment;
 
-public class methodsForFunctions {
+public class MethodsForFunctions {
 
     public static boolean checkPossibleAdd(FileSystem fs, int length) {
         if (fs.segments.get(0).getLastBlockNumber() + length < fs.maxDataNum) {
