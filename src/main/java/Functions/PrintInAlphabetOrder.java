@@ -5,12 +5,12 @@ import Structure.struct.iCommand;
 
 public class PrintInAlphabetOrder implements iCommand {
     @Override
-    public void Execute(FileSystem fs) {
+    public void execute(FileSystem fs) {
 
     }
 
     @Override
-    public void ReadParameters() {
+    public void readParameters() {
 
     }
 }

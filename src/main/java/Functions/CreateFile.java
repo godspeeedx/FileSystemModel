@@ -42,7 +42,7 @@ public class CreateFile implements iCommand {
     }
 
     @Override
-    public void Execute(FileSystem fs) {
+    public void execute(FileSystem fs) {
         Scanner in = new Scanner(System.in);
         System.out.println("Введите имя файла");
         String filename = in.nextLine();
@@ -69,6 +69,6 @@ public class CreateFile implements iCommand {
     }
 
     @Override
-    public void ReadParameters() {
+    public void readParameters() {
     }
 }

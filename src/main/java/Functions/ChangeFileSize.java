@@ -16,7 +16,7 @@ import java.util.Scanner;
 public class ChangeFileSize implements iCommand {
 
     @Override
-    public void Execute(FileSystem fs) {
+    public void execute(FileSystem fs) {
         boolean check = true;
         Scanner in = new Scanner(System.in);
         System.out.println("Введите имя файла");
@@ -50,7 +50,7 @@ public class ChangeFileSize implements iCommand {
 
 
     @Override
-    public void ReadParameters() {
+    public void readParameters() {
 
     }
 }

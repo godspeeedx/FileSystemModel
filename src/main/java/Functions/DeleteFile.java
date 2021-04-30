@@ -6,6 +6,7 @@ import Structure.struct.iCommand;
 import java.util.Scanner;
 
 public class DeleteFile implements iCommand {
+
     public static boolean deleteFile(FileSystem fs, String fileName){
         boolean findName = false;
         flag:
@@ -21,7 +22,7 @@ public class DeleteFile implements iCommand {
         return findName;
     }
     @Override
-    public void Execute(FileSystem fs) {
+    public void execute(FileSystem fs) {
         Scanner in = new Scanner(System.in);
         System.out.println("Введите имя файл");
         String fileName = in.nextLine();
@@ -33,7 +34,7 @@ public class DeleteFile implements iCommand {
     }
 
     @Override
-    public void ReadParameters() {
+    public void readParameters() {
 
     }
 }

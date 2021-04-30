@@ -9,16 +9,16 @@ public class MonitorClass {
 
     public void createSystem(){
         actualCommand = new CreateSystem();
-        actualCommand.Execute(fs);
+        actualCommand.execute(fs);
     }
     public void downloadSystem(){
         actualCommand = new DownloadSystem();
-        actualCommand.Execute(fs);
+        actualCommand.execute(fs);
     }
 
     public void createFile(){
         actualCommand = new CreateFile();
-        actualCommand.Execute(fs);
+        actualCommand.execute(fs);
     }
 
     public void help() {
@@ -31,7 +31,7 @@ public class MonitorClass {
 
     public void exit() {
         actualCommand = new SaveSystem();
-        actualCommand.Execute(fs);
+        actualCommand.execute(fs);
     }
 
 
