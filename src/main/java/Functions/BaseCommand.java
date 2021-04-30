@@ -14,4 +14,9 @@ public class BaseCommand {
         this.fileSystem = fileSystem;
     }
 
+    public BaseCommand(){
+        monitor = null;
+        fileSystem = null;
+    }
+
 }

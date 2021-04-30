@@ -1,9 +1,9 @@
 package Structure.struct;
 
 public class Data {
-    boolean type; // существует или удалён
-    String name;
-    int size;// кол-во блоков
+    public boolean type; // существует или удалён
+    public String name;
+    public int size;// кол-во блоков
 
     //Создали
     public Data(String name, int size) {

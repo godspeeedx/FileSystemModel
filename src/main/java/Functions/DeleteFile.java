@@ -20,7 +20,7 @@ public class DeleteFile extends BaseCommand implements iCommand  {
         for (int i = 0; i < fs.segments.size(); i++) {
             for (int j = 0; j < fs.segments.get(i).datas.size(); j++) {
                 if (fs.segments.get(i).datas.get(j).getName().equals(fileName)) {
-                    fs.segments.get(i).datas.get(j).setType(false);
+                    fs.segments.get(i).datas.get(j).type = false;
                     findName = true;
                     break flag;
                 }
@@ -31,8 +31,6 @@ public class DeleteFile extends BaseCommand implements iCommand  {
     @Override
     public void execute(FileSystem fs) {
         Scanner in = new Scanner(System.in);
-        //System.out.println("Введите имя файл");
-        //String fileName = in.nextLine();
         if(deleteFile(fs, fileName)){
             monitor.writeMessage("Файл удалён");
         } else {
