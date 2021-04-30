@@ -7,7 +7,7 @@ public class FileSystem {
     public int systemSize; // количество блоков
     public int maxSegmentNum; // максимальное число сегментов
     public ArrayList<Segment> segments; // Массив сегментов
-    public int maxDataNum; // Число записей в каждом сегменте(максимальная длина сегмента )
+    public int maxDataNum; // Число записей в каждом сегменте
 
     public FileSystem(String systemName, int systemSize, int maxSegmentNum, int maxDataNum) {
         this.systemName = systemName;

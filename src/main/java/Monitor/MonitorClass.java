@@ -3,7 +3,7 @@ package Monitor;
 import Functions.*;
 import Structure.struct.*;
 
-public class MonitorClass {
+public class MonitorClass implements iMonitor{
     FileSystem fs;
     iCommand actualCommand ;
 
@@ -35,5 +35,13 @@ public class MonitorClass {
     }
 
 
+    @Override
+    public void writeMessage(String userMessage) {
 
+    }
+
+    @Override
+    public String readString(String userMessage) {
+        return null;
+    }
 }

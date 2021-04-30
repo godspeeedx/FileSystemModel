@@ -26,7 +26,7 @@ public class CreateFile implements iCommand {
                     if (fs.segments.size() < fs.maxSegmentNum) {
                         fs.segments.add(new Segment(fs.maxDataNum));
                         int segmentSize = fs.segments.size() - 1;
-                        Segment.lastBlockNumber = segmentSize * Segment.lengthSegment;
+                        //Segment.lastBlockNumber = segmentSize * Segment.lengthSegment;
                         fs.segments.get(segmentSize).datas.add(new Data(filename, length));
                         fs.segments.get(segmentSize).currentDataNum += 1;
                         Segment.lastBlockNumber += length;

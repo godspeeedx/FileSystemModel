@@ -2,10 +2,17 @@ package Functions;
 
 import Structure.struct.FileSystem;
 import Structure.struct.iCommand;
+import Structure.struct.iMonitor;
 
 import java.util.Scanner;
 
-public class DeleteFile implements iCommand {
+public class DeleteFile extends BaseCommand implements iCommand  {
+
+    String fileName;
+
+    public DeleteFile(iMonitor im, FileSystem fileSystem) {
+        super(im, fileSystem);
+    }
 
     public static boolean deleteFile(FileSystem fs, String fileName){
         boolean findName = false;
@@ -24,17 +31,17 @@ public class DeleteFile implements iCommand {
     @Override
     public void execute(FileSystem fs) {
         Scanner in = new Scanner(System.in);
-        System.out.println("Введите имя файл");
-        String fileName = in.nextLine();
+        //System.out.println("Введите имя файл");
+        //String fileName = in.nextLine();
         if(deleteFile(fs, fileName)){
-            System.out.println("Файл удалён");
+            monitor.writeMessage("Файл удалён");
         } else {
-            System.out.println("Файл не был найден");
+            monitor.writeMessage("Файл не был найден");
         }
     }
 
     @Override
     public void readParameters() {
-
+        this.fileName = monitor.readString("Введите имя файла");
     }
 }

@@ -6,11 +6,11 @@ import Structure.struct.Segment;
 public class MethodsForFunctions {
 
     public static boolean checkPossibleAdd(FileSystem fs, int length) {
-        if (fs.segments.get(0).getLastBlockNumber() + length < fs.maxDataNum) {
+        //if (fs.segments.get(0).getLastBlockNumber() + length < fs.maxDataNum) {
             return true;
         }
-        return false;
-    }
+
+   // }
 
 
 
@@ -23,9 +23,9 @@ public class MethodsForFunctions {
             for (int i = 0; i < fs.segments.get(segmentSize).datas.size(); i++) {
                 occupied += fs.segments.get(segmentSize).datas.get(i).getSize();
             }
-            if (Segment.lengthSegment - occupied < length) {
-                return false;
-            }
+            //if (Segment.lengthSegment - occupied < length) {
+            //    return false;
+            //}
         }
 
         return true;
