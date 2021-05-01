@@ -10,18 +10,27 @@ public class Print extends BaseCommand implements iCommand {
         super(im, fileSystem);
     }
     public static String toString(FileSystem fs){
+
         if (fs.segments.size() == 0){
             return "Файловая система пуста";
         } else {
+            boolean isFile = false;
             String string = "";
             for (int i = 0; i < fs.segments.size(); i++) {
                 string += "Сегмент " + i + "\n";
                 for (int j = 0; j < fs.segments.get(i).datas.size(); j++) {
-                    string += fs.segments.get(i).datas.get(j).name +
-                    " " + fs.segments.get(i).datas.get(j).size +  "\n";
+                    if (fs.segments.get(i).datas.get(j).type) {
+                        isFile = true;
+                        string += fs.segments.get(i).datas.get(j).name +
+                                " " + fs.segments.get(i).datas.get(j).size + "\n";
+                    }
                 }
             }
-            return string;
+            if(isFile) {
+                return string;
+            } else {
+                return "Файловая система пуста";
+            }
         }
 
     }
