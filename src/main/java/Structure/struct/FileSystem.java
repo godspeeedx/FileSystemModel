@@ -11,11 +11,19 @@ public class FileSystem {
 
     public FileSystem(String systemName, int systemSize, int maxSegmentNum, int maxDataNum) {
         this.systemName = systemName;
-        this.systemSize = systemSize;
+
+        FileSystem.systemSize = systemSize;
 
         this.maxSegmentNum = maxSegmentNum;
         this.segments = new ArrayList<>();
         this.maxDataNum = maxDataNum;
+    }
+
+    public void copy(FileSystem buf) {
+        this.systemName = buf.systemName;
+        this.maxSegmentNum = buf.maxSegmentNum;
+        this.maxDataNum = buf.maxDataNum;
+        this.segments = buf.segments;
     }
 
     @Override

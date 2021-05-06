@@ -8,10 +8,6 @@ public class CreateFile extends BaseCommand implements iCommand {
     protected String fileName;
     protected int fileLength;
 
-    public CreateFile() {
-        super();
-    }
-
     public CreateFile(iMonitor im, FileSystem fileSystem) {
         super(im, fileSystem);
     }
@@ -76,19 +72,23 @@ public class CreateFile extends BaseCommand implements iCommand {
                     fs.segments.get(segmentSize).currentDataNum += 1;
                     Segment.lastBlockNumber += length;
                     return 0; // файл успешно создан
-                } else { return  -1;} // не хватило места
+                } else {
+                    return -1;
+                } // не хватило места
             }
             // Если добавляем в новый сегмент
             else {
-               if (fs.segments.size() < fs.maxSegmentNum ){
-                   fs.segments.add(new Segment(fs.maxDataNum));
-                   if (FileSystem.systemSize - Segment.lastBlockNumber > length) {
-                       fs.segments.get(segmentSize + 1).datas.add(new Data(filename, length));
-                       fs.segments.get(segmentSize + 1).currentDataNum += 1;
-                       Segment.lastBlockNumber += length;
-                       return 0; // файл успешно создан
-                   } else { return  -1;} // не хватило места
-               }
+                if (fs.segments.size() < fs.maxSegmentNum) {
+                    fs.segments.add(new Segment(fs.maxDataNum));
+                    if (FileSystem.systemSize - Segment.lastBlockNumber > length) {
+                        fs.segments.get(segmentSize + 1).datas.add(new Data(filename, length));
+                        fs.segments.get(segmentSize + 1).currentDataNum += 1;
+                        Segment.lastBlockNumber += length;
+                        return 0; // файл успешно создан
+                    } else {
+                        return -1;
+                    } // не хватило места
+                }
             }
         }
         return 1;//файл уже сущетсвует 
