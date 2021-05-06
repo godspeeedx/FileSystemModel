@@ -34,7 +34,7 @@ public class PrintInAlphabetOrder extends BaseCommand implements iCommand {
                 String files = "";
                 Collections.sort(arrayList, Comparator.comparing(Data::getName));
                 for (int i = 0; i < arrayList.size(); i++) {
-                    files = arrayList.get(i).name + " " + arrayList.get(i).size + "\n";
+                    files += arrayList.get(i).name + " " + arrayList.get(i).size + "\n";
                 }
                 return files;
             }

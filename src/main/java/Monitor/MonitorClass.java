@@ -87,8 +87,20 @@ public class MonitorClass implements iMonitor{
 
     @Override
     public int readFileSize(String userMessage) {
-        //вот тута. пример в createSystem
-        return 0;
+        Scanner in = new Scanner(System.in);
+        System.out.println(userMessage);
+        boolean check = true;
+        int fileLength = 0;
+        while (check) {
+            fileLength = in.nextInt();
+            if (fileLength < 0 || fileLength > FileSystem.systemSize) {
+                System.out.println("Длина файла некорректна");
+                System.out.println("Введите новую длину файла");
+            } else {
+                check = false;
+            }
+        }
+        return fileLength;
     }
 
     @Override

@@ -16,6 +16,7 @@ public class ChangeFileSize extends BaseCommand implements iCommand {
 
     @Override
     public void execute(FileSystem fs) {
+        readParameters();
         if (DeleteFile.deleteFile(fs, fileName)) {
             int isFileCreate = CreateFile.createFile(fs, this.fileName, this.fileLength);
             if (isFileCreate == 0) {
@@ -34,20 +35,8 @@ public class ChangeFileSize extends BaseCommand implements iCommand {
 
     @Override
     public void readParameters() {
-        Scanner in = new Scanner(System.in);
-        System.out.println("Введите имя файла");
-        this.fileName = in.nextLine();
-        System.out.println("Введите длину файла");
-        boolean check = true;
-        this.fileLength = 0;
-        while (check) {
-            System.out.println("Введите новую длину файла");
-            this.fileLength = in.nextInt();
-            if (this.fileLength < 0 || this.fileLength < FileSystem.systemSize) {
-                System.out.println("Длина файла некорректна");
-            } else {
-                check = false;
-            }
-        }
+        this.fileName = monitor.readString("Введите имя файла");
+        this.fileLength = monitor.readFileSize("Введите длину файла");
+
     }
 }

@@ -10,7 +10,8 @@ public class MethodsForFunctions {
         flag:
         for (int i = 0; i < fs.segments.size(); i++) {
             for (int j = 0; j < fs.segments.get(i).datas.size(); j++) {
-                if (fs.segments.get(i).datas.get(j).getName().equals(fileName)) {
+                if (fs.segments.get(i).datas.get(j).type == true &&
+                fs.segments.get(i).datas.get(j).getName().equals(fileName)) {
                     findName = true;
                     break flag;
                 }
