@@ -41,6 +41,26 @@ public class DeleteFileTest {
             readResults.remove(0);
             return result;
         }
+
+        @Override
+        public int readFileSize(String userMessage) {
+            return 0;
+        }
+
+        @Override
+        public int readSystemSize(String userMessage) {
+            return 0;
+        }
+
+        @Override
+        public int readMaxSegmentNum(String userMessage) {
+            return 0;
+        }
+
+        @Override
+        public int readMaxDataNum(String userMessage) {
+            return 0;
+        }
     }
 
     @Test

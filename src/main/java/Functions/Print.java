@@ -9,9 +9,10 @@ public class Print extends BaseCommand implements iCommand {
     public Print(iMonitor im, FileSystem fileSystem) {
         super(im, fileSystem);
     }
-    public static String toString(FileSystem fs){
 
-        if (fs.segments.size() == 0){
+    public static String toString(FileSystem fs) {
+
+        if (fs.segments.size() == 0) {
             return "Файловая система пуста";
         } else {
             boolean isFile = false;
@@ -26,7 +27,7 @@ public class Print extends BaseCommand implements iCommand {
                     }
                 }
             }
-            if(isFile) {
+            if (isFile) {
                 return string;
             } else {
                 return "Файловая система пуста";

@@ -13,6 +13,7 @@ public class PrintInAlphabetOrder extends BaseCommand implements iCommand {
         super(im, fileSystem);
     }
 
+
     public static String toString(FileSystem fs) {
         if (fs.segments.size() == 0) {
             return "Файловая система пуста";
