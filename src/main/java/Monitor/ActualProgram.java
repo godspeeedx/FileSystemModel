@@ -2,6 +2,7 @@ package Monitor;
 
 import Structure.struct.FileSystem;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
 public class ActualProgram {
@@ -50,7 +51,7 @@ public class ActualProgram {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
 
         Scanner sc = new Scanner(System.in);
         boolean correct = false;
@@ -61,7 +62,10 @@ public class ActualProgram {
             System.out.print("$");
             String command = sc.nextLine();
 
-            if (command.equals("ИЗМЕНИТЬ РАЗМЕР")) {
+            var commandObject = monitor.runFunction(command);
+            commandObject.execute(monitor.fs);
+
+            /*if (command.equals("ИЗМЕНИТЬ РАЗМЕР")) {
                 monitor.changeFileSize();
                 correct = true;
             }
@@ -113,7 +117,7 @@ public class ActualProgram {
                         "Информация о командах доступна по команде ПОМОГИТЕ.");
 
             }
-            correct = false;
+            correct = false;*/
         }
     }
 
