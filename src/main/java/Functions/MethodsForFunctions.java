@@ -1,6 +1,5 @@
 package Functions;
 
-import Structure.struct.Data;
 import Structure.struct.FileSystem;
 import Structure.struct.Segment;
 
@@ -35,13 +34,13 @@ public class MethodsForFunctions {
         return space;
     }
 
-    public static boolean possibleToInsert(FileSystem fs, int length) {
-        if (length < MethodsForFunctions.howMuchSpace(fs)) {
+    public static boolean possibleToInsert(FileSystem fs, int length){
+        if (length <= MethodsForFunctions.howMuchSpace(fs)) {
             for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
                 for (int j = 0; j < fs.segments.get(i).datas.size(); j++) { // пробег по сзаписям  в сегменте
                     if (!fs.segments.get(i).datas.get(j).type) { // вставляем на удалённое, когда всё совпало
                         if (length == fs.segments.get(i).datas.get(j).size) {
-                            return true; // файл успешно создан
+                            return true;
                         } // случ когда вставляем в самый конец при том, что она была удалена
                         else if (length < fs.segments.get(i).datas.get(j).size) {
                             if ((j != fs.maxDataNum - 1 && fs.segments.get(i).datas.size() - j == 1) ||
@@ -51,7 +50,6 @@ public class MethodsForFunctions {
                             else {
                                 if (j + 1 < fs.segments.get(i).datas.size()
                                         && !fs.segments.get(i).datas.get(j + 1).type) {
-
                                     return true; // файл успешно создан
                                 }
                             }
@@ -60,7 +58,7 @@ public class MethodsForFunctions {
                             if (i + 1 == fs.segments.size() && j + 1 == fs.segments.get(i).datas.size()) {
                                 if (FileSystem.systemSize - Segment.lastBlockNumber -
                                         fs.segments.get(i).datas.get(j).size > length) {
-                                    return true; // файл можно создать
+                                    return true; // файл успешно создан
                                 }
                             }
                         }
@@ -71,22 +69,16 @@ public class MethodsForFunctions {
             if (fs.segments.size() == 0) {
                 return true;
             }
-
             int segmentSize = fs.segments.size() - 1;
             if (fs.segments.get(segmentSize).datas.size() != fs.maxDataNum) {
-                // не хватило места
-                return true; // файл успешно создан
+                return true;
             }
             // Если добавляем в новый сегмент
             else {
-                if (fs.segments.size() < fs.maxSegmentNum) {
-                    // не хватило места
-                    return true; // файл успешно создан
-                }
+                return fs.segments.size() < fs.maxSegmentNum; // файл успешно создан
             }
-            return false;
         } else {
-            return false;
+            return false;// не хватило места
         }
 
     }
