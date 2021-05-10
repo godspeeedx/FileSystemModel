@@ -36,54 +36,59 @@ public class MethodsForFunctions {
     }
 
     public static boolean possibleToInsert(FileSystem fs, int length) {
-        for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
-            for (int j = 0; j < fs.segments.get(i).datas.size(); j++) { // пробег по сзаписям  в сегменте
-                if (!fs.segments.get(i).datas.get(j).type) { // вставляем на удалённое, когда всё совпало
-                    if (length == fs.segments.get(i).datas.get(j).size) {
-                        return true; // файл успешно создан
-                    } // случ когда вставляем в самый конец при том, что она была удалена
-                    else if (length < fs.segments.get(i).datas.get(j).size) {
-                        if ((j != fs.maxDataNum - 1 && fs.segments.get(i).datas.size() - j == 1) ||
-                                (j == fs.maxDataNum - 1 && fs.segments.size() - i == 1)) {
+        if (length < MethodsForFunctions.howMuchSpace(fs)) {
+            for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
+                for (int j = 0; j < fs.segments.get(i).datas.size(); j++) { // пробег по сзаписям  в сегменте
+                    if (!fs.segments.get(i).datas.get(j).type) { // вставляем на удалённое, когда всё совпало
+                        if (length == fs.segments.get(i).datas.get(j).size) {
                             return true; // файл успешно создан
-                        } // если меньшк и следующий удалён
-                        else {
-                            if (j + 1 < fs.segments.get(i).datas.size()
-                                    && !fs.segments.get(i).datas.get(j + 1).type) {
-
+                        } // случ когда вставляем в самый конец при том, что она была удалена
+                        else if (length < fs.segments.get(i).datas.get(j).size) {
+                            if ((j != fs.maxDataNum - 1 && fs.segments.get(i).datas.size() - j == 1) ||
+                                    (j == fs.maxDataNum - 1 && fs.segments.size() - i == 1)) {
                                 return true; // файл успешно создан
-                            }
-                        }
+                            } // если меньшк и следующий удалён
+                            else {
+                                if (j + 1 < fs.segments.get(i).datas.size()
+                                        && !fs.segments.get(i).datas.get(j + 1).type) {
 
-                    } else {
-                        if (i + 1 == fs.segments.size() && j + 1 == fs.segments.get(i).datas.size()) {
-                            if (FileSystem.systemSize - Segment.lastBlockNumber -
-                                    fs.segments.get(i).datas.get(j).size > length) {
-                                return true; // файл можно создать
+                                    return true; // файл успешно создан
+                                }
+                            }
+
+                        } else {
+                            if (i + 1 == fs.segments.size() && j + 1 == fs.segments.get(i).datas.size()) {
+                                if (FileSystem.systemSize - Segment.lastBlockNumber -
+                                        fs.segments.get(i).datas.get(j).size > length) {
+                                    return true; // файл можно создать
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-        // Если добавляем в последний сегмент
-        if (fs.segments.size() == 0) {
-            return true;
+            // Если добавляем в последний сегмент
+            if (fs.segments.size() == 0) {
+                return true;
+            }
+
+            int segmentSize = fs.segments.size() - 1;
+            if (fs.segments.get(segmentSize).datas.size() != fs.maxDataNum) {
+                // не хватило места
+                return true; // файл успешно создан
+            }
+            // Если добавляем в новый сегмент
+            else {
+                if (fs.segments.size() < fs.maxSegmentNum) {
+                    // не хватило места
+                    return true; // файл успешно создан
+                }
+            }
+            return false;
+        } else {
+            return false;
         }
 
-        int segmentSize = fs.segments.size() - 1;
-        if (fs.segments.get(segmentSize).datas.size() != fs.maxDataNum) {
-            // не хватило места
-            return FileSystem.systemSize - Segment.lastBlockNumber > length; // файл успешно создан
-        }
-        // Если добавляем в новый сегмент
-        else {
-            if (fs.segments.size() < fs.maxSegmentNum) {
-                // не хватило места
-                return FileSystem.systemSize - Segment.lastBlockNumber > length; // файл успешно создан
-            }
-        }
-        return false;
     }
 
     public static int maxLengthToInsert(FileSystem fs) {
