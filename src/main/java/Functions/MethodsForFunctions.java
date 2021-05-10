@@ -2,6 +2,12 @@ package Functions;
 
 import Structure.struct.FileSystem;
 import Structure.struct.Segment;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Modifier;
 
 
 public class MethodsForFunctions {
@@ -34,7 +40,7 @@ public class MethodsForFunctions {
         return space;
     }
 
-    public static boolean possibleToInsert(FileSystem fs, int length){
+    public static boolean possibleToInsert(FileSystem fs, int length) {
         if (length <= MethodsForFunctions.howMuchSpace(fs)) {
             for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
                 for (int j = 0; j < fs.segments.get(i).datas.size(); j++) { // пробег по сзаписям  в сегменте
@@ -81,6 +87,27 @@ public class MethodsForFunctions {
             return false;// не хватило места
         }
 
+    }
+
+    public static String saveSystem(FileSystem fs) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+
+        gsonBuilder.excludeFieldsWithModifiers(Modifier.TRANSIENT);
+
+        Gson gson = gsonBuilder.create();
+
+        String json = gson.toJson(fs);
+
+        //System.out.println(json);
+
+        try {
+            FileWriter writer = new FileWriter(fs.systemName + ".txt");
+            writer.write(json);
+            writer.close();
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+        return "Система сохранена";
     }
 
     public static int maxLengthToInsert(FileSystem fs) {

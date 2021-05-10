@@ -7,54 +7,23 @@ import java.util.Scanner;
 
 public class ActualProgram {
 
-    //ВОЗМОЖНЫЙ КОСТЫЛЬ
     static MonitorClass monitor = new MonitorClass(new FileSystem("", 0, 0, 0));
-    //ВОЗМОЖНЫЙ КОСТЫЛЬ
 
-    public static void init() {
+    public static void init() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Доброе утро! Вас приветствует группа С18-501!");
+        System.out.println("\nДоброе утро! Вас приветствует группа С18-501!");
         System.out.println("Загружаем систему или создаем новую?");
 
-
-        while (true) {
-            String choice = sc.nextLine();
-            if (choice.equals("СОЗДАЕМ")) {
-                monitor.createSystem();
-                break;
-            } else if (choice.equals("ЗАГРУЖАЕМ")) {
-                monitor.downloadSystem();
-                break;
-            } else {
-                System.out.println("Ничего не понятно! Пожалуйста, соберитесь с мыслями и попробуйте еще раз!");
-            }
-        }
-    }
-
-    private static void tryToSave() {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Сохранить текущую систему? Все изменения будут потеряны.");
-
-        while (true) {
-            String choice = sc.nextLine();
-            if (choice.equals("ДА")) {
-                monitor.saveSystem();
-                break;
-            } else if (choice.equals("НЕТ")) {
-                break;
-            } else {
-                System.out.println("Пожалуйста, соберитесь и дайте нормальный и связный ответ.");
-            }
-        }
+        String choice = sc.nextLine();
+        var commandObject = monitor.runStart(choice);
+        commandObject.execute(monitor.fs);
     }
 
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
 
         Scanner sc = new Scanner(System.in);
         RegistredCommands.init();
-        boolean correct = false;
 
         init();
 
@@ -63,7 +32,6 @@ public class ActualProgram {
             String command = sc.nextLine();
 
             if (command.equals("ВЫЙТИ")) {
-
                 break;
             }
 

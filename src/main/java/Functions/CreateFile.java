@@ -113,6 +113,7 @@ public class CreateFile extends BaseCommand implements iCommand {
         } else if (isFileCreate == 1) {
             monitor.writeMessage("Файл уже существует");
         }
+        monitor.writeMessage(MethodsForFunctions.saveSystem(fs));
     }
 
     @Override

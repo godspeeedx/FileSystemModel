@@ -24,6 +24,8 @@ public class Defragmentation extends BaseCommand implements iCommand {
         processor.deleteHoles(fs);
         //сжимаем фс
         processor.squeezeFS(fs);
+
+        monitor.writeMessage(MethodsForFunctions.saveSystem(fs));
     }
 
     @Override

@@ -28,11 +28,9 @@ public class FileSystem {
 
     @Override
     public String toString() {
-        return "FileSystem{" +
-                "systemName='" + systemName + '\'' +
-                ", systemSize=" + systemSize +
-                ", maxSegmentNum=" + maxSegmentNum +
-                ", maxDataNum=" + maxDataNum +
-                '}';
+        return "Название системы: " + systemName + "\nРазмер диска: " + systemSize
+                + "\nМаксимальное число сегментов: " + maxSegmentNum
+                + "\nМаксимальное число записей в каждом сегменте: " + maxDataNum;
+
     }
 }

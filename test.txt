@@ -1,1 +1,0 @@
-{"systemName":"тест","maxSegmentNum":14,"segments":[{"firstBlockNumber":1,"datas":[{"type":true,"name":"пып","size":5},{"type":true,"name":"пап","size":4}],"currentDataNum":2}],"maxDataNum":14}
