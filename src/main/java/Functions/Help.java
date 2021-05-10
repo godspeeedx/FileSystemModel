@@ -20,7 +20,7 @@ public class Help extends BaseCommand implements iCommand {
         for (String key : registredCommands.keySet()) {
             monitor.writeMessage("* " + key);
         }
-        monitor.writeMessage("Если нужно подробнее об одной из, введите её название. Если нет - введите ВЫХОД.");
+        monitor.writeMessage("Если нужно подробнее об одной из них, введите её название. Если нет - введите ВЫХОД.");
         while(true){
             readParameters();
             switch (commandName) {
@@ -71,7 +71,7 @@ public class Help extends BaseCommand implements iCommand {
                 default:
                     monitor.writeMessage("Кажется по введённой вами команде ещё нет справки. Или вы ошиблись вводом. Попробуем ещё раз?");
             }
-            monitor.writeMessage("Если нужна информация по ещё одной команде, введите её название. Если нет - введите ВЫХОД.");
+            monitor.writeMessage("Если нужна информация по команде, введите её название. Если нет - введите ВЫХОД.");
         }
 
     }
