@@ -20,7 +20,7 @@ public class RegistredCommands {
         registredCommands.put("НАПЕЧАТАТЬ В АЛФАВИТНОМ ПОРЯДКЕ", PrintInAlphabetOrder.class.getName());
         registredCommands.put("СОХРАНИТЬ СИСТЕМУ", SaveSystem.class.getName());
         registredCommands.put("ПОМОГИТЕ", Help.class.getName());
-        //registredCommands.put("ИНФОРМАЦИЯ", Info.class.getName());
+        registredCommands.put("ИНФОРМАЦИЯ", GetSysInfo.class.getName());
     }
 
 }

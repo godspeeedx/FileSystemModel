@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class DownloadSystem extends BaseCommand implements iCommand {
 
@@ -34,9 +36,12 @@ public class DownloadSystem extends BaseCommand implements iCommand {
     }
 
     public String downloadSystem(String systemName) throws IOException {
-        FileReader fr = new FileReader(systemName + ".txt");
+
+        return Files.readString(Paths.get(systemName));
+
+        /*FileReader fr = new FileReader(systemName + ".txt");
         fr.close();
-        return fr.toString();
+        return fr.toString();*/
 
     }
 
