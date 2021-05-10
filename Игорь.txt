@@ -1,0 +1,1 @@
+{"systemName":"Игорь","systemSize":23,"maxSegmentNum":4,"segments":[],"maxDataNum":5}
