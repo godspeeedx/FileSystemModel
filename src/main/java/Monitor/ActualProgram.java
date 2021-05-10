@@ -14,6 +14,7 @@ public class ActualProgram {
 
         System.out.println("\nДоброе утро! Вас приветствует группа С18-501!");
         System.out.println("Загружаем систему или создаем новую?");
+        System.out.println("(Введите СОЗДАТЬ СИСТЕМУ или ЗАГРУЗИТЬ СИСТЕМУ)");
 
         String choice = sc.nextLine();
         var commandObject = monitor.runStart(choice);
@@ -26,7 +27,7 @@ public class ActualProgram {
         RegistredCommands.init();
 
         init();
-
+        System.out.println("(Если не помните команду, вводите ПОМОГИТЕ)");
         while (true) {
             System.out.print("$");
             String command = sc.nextLine();
