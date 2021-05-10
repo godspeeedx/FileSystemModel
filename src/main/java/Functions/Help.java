@@ -4,9 +4,9 @@ import Structure.struct.FileSystem;
 import Structure.struct.iCommand;
 import Structure.struct.iMonitor;
 
-public class SaveSystem extends BaseCommand implements iCommand {
+public class Help extends BaseCommand implements iCommand {
 
-    public SaveSystem(iMonitor im, FileSystem fileSystem) {
+    public Help(iMonitor im, FileSystem fileSystem) {
         super(im, fileSystem);
     }
 

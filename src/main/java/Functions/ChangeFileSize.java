@@ -29,6 +29,7 @@ public class ChangeFileSize extends BaseCommand implements iCommand {
         } else {
             monitor.writeMessage("Файл не был найден");
         }
+        monitor.writeMessage(MethodsForFunctions.saveSystem(fs));
 
     }
 
