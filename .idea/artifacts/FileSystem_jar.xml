@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact name="FileSystem:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FileSystem_jar</output-path>
+    <root id="root">
+      <element id="archive" name="FileSystem.jar">
+        <element id="module-output" name="FileSystem" />
+      </element>
+      <element id="library" level="project" name="Maven: junit:junit:4.13.2" />
+    </root>
+  </artifact>
+</component>
