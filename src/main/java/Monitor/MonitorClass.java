@@ -4,8 +4,9 @@ import Functions.*;
 import Structure.struct.*;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Type;
 import java.util.*;
+
+import static Monitor.RegistredCommands.registredCommands;
 
 public class MonitorClass implements iMonitor {
     FileSystem fs;
@@ -15,15 +16,11 @@ public class MonitorClass implements iMonitor {
         this.fs = fs;
     }
 
-    Map<String, String> registredCommands = new HashMap<String, String>();
-
     public iCommand runFunction(String commandName) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        registredCommands.put("СОЗДАТЬ ФАЙЛ", CreateFile.class.getName());
         var commandClassName = registredCommands.get(commandName);
         var constr = Class.forName(commandClassName).getConstructor(iMonitor.class, FileSystem.class);
         var command = (iCommand) constr.newInstance(this, fs); //fs,
         return command;
-        //command.execute(null);
     }
 
     public void changeFileSize() {
@@ -72,15 +69,6 @@ public class MonitorClass implements iMonitor {
     public void saveSystem() {
         actualCommand = new SaveSystem(this, fs);
         actualCommand.execute(fs);
-    }
-
-
-    public void help() {
-
-    }
-
-    public void info() {
-
     }
 
     @Override

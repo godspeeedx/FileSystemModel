@@ -14,7 +14,6 @@ public class ActualProgram {
     public static void init() {
         Scanner sc = new Scanner(System.in);
 
-
         System.out.println("Доброе утро! Вас приветствует группа С18-501!");
         System.out.println("Загружаем систему или создаем новую?");
 
@@ -54,6 +53,7 @@ public class ActualProgram {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
 
         Scanner sc = new Scanner(System.in);
+        RegistredCommands.init();
         boolean correct = false;
 
         init();
@@ -62,62 +62,14 @@ public class ActualProgram {
             System.out.print("$");
             String command = sc.nextLine();
 
+            if (command.equals("ВЫЙТИ")) {
+
+                break;
+            }
+
             var commandObject = monitor.runFunction(command);
             commandObject.execute(monitor.fs);
 
-            /*if (command.equals("ИЗМЕНИТЬ РАЗМЕР")) {
-                monitor.changeFileSize();
-                correct = true;
-            }
-            if (command.equals("СОЗДАТЬ ФАЙЛ")) {
-                monitor.createFile();
-                correct = true;
-            }
-            if (command.equals("СОЗДАТЬ СИСТЕМУ")) {
-                tryToSave();
-                monitor.createSystem();
-                correct = true;
-            }
-            if (command.equals("ДЕФРАГМЕНТАЦИЯ")) {
-                monitor.defragmentation();
-                correct = true;
-            }
-
-            if (command.equals("УДАЛИТЬ")) {
-                monitor.deleteFile();
-                correct = true;
-            }
-            if (command.equals("ЗАГРУЗИТЬ СИСТЕМУ")) {
-                tryToSave();
-                monitor.downloadSystem();
-                correct = true;
-            }
-            if (command.equals("НАПЕЧАТАТЬ")) {
-                monitor.printSystem();
-                correct = true;
-            }
-            if (command.equals("НАПЕЧАТАТЬ В АЛФАВИТНОМ ПОРЯДКЕ")) {
-                monitor.printSystemInOrder();
-                correct = true;
-            }
-            if (command.equals("ИНФА")) {
-                monitor.info();
-                correct = true;
-            }
-            if (command.equals("ПОМОГИТЕ")) {
-                monitor.help();
-                correct = true;
-            }
-            if (command.equals("ВЫЙТИ")) {
-                tryToSave();
-                break;
-            }
-            if (!correct) {
-                System.out.println("Команды " + command + " не существует. Пожалуйста, попробуйте еще раз.\n" +
-                        "Информация о командах доступна по команде ПОМОГИТЕ.");
-
-            }
-            correct = false;*/
         }
     }
 
