@@ -20,6 +20,7 @@ public class DeleteFile extends BaseCommand implements iCommand {
             for (int j = 0; j < fs.segments.get(i).datas.size(); j++) {
                 if (fs.segments.get(i).datas.get(j).getName().equals(fileName)) {
                     fs.segments.get(i).datas.get(j).type = false;
+                    fs.segments.get(i).currentDataNum -= 1;
                     findName = true;
                     break flag;
                 }

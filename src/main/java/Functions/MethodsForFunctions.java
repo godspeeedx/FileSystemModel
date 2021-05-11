@@ -31,12 +31,12 @@ public class MethodsForFunctions {
         int space = 0;
         for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
             for (int j = 0; j < fs.segments.get(i).datas.size(); j++) { // пробег по записям  в сегменте
-                if (!fs.segments.get(i).datas.get(j).type) {
+                if (fs.segments.get(i).datas.get(j).type) {
                     space += fs.segments.get(i).datas.get(j).size;
                 }
             }
         }
-        space += FileSystem.systemSize - Segment.lastBlockNumber + 1;
+        space = FileSystem.systemSize - space;
         return space;
     }
 

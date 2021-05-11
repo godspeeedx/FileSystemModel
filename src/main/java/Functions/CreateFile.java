@@ -8,6 +8,7 @@ public class CreateFile extends BaseCommand implements iCommand {
     protected String fileName;
     protected int fileLength;
 
+
     public CreateFile(iMonitor im, FileSystem fileSystem) {
         super(im, fileSystem);
     }
@@ -31,6 +32,7 @@ public class CreateFile extends BaseCommand implements iCommand {
                                     Segment.lastBlockNumber -= difference;
                                     fs.segments.get(i).currentDataNum += 1;
                                     fs.segments.get(i).datas.get(j).type = true;
+                                    fs.segments.get(i).datas.get(j).size = length;
                                     fs.segments.get(i).datas.get(j).name = filename;
                                     return 0; // файл успешно создан
                                 } // если меньшк и следующий удалён
@@ -49,8 +51,7 @@ public class CreateFile extends BaseCommand implements iCommand {
 
                             } else {
                                 if (i + 1 == fs.segments.size() && j + 1 == fs.segments.get(i).datas.size()) {
-                                    if (FileSystem.systemSize - Segment.lastBlockNumber -
-                                            fs.segments.get(i).datas.get(j).size > length) {
+                                    if (MethodsForFunctions.howMuchSpace(fs) >= length) {
                                         Segment.lastBlockNumber -= fs.segments.get(i).datas.get(j).size;
                                         Segment.lastBlockNumber += length;
                                         fs.segments.get(i).datas.get(j).type = true;
