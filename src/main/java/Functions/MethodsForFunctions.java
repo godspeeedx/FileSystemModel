@@ -12,6 +12,19 @@ import java.lang.reflect.Modifier;
 
 public class MethodsForFunctions {
 
+    public static int takeFileLength(FileSystem fs, String fileName){
+        for (int i = 0; i < fs.segments.size(); i++) {
+            for (int j = 0; j < fs.segments.get(i).datas.size(); j++) {
+                if (fs.segments.get(i).datas.get(j).type &&
+                        fs.segments.get(i).datas.get(j).getName().equals(fileName)) {
+                    return fs.segments.get(i).datas.get(j).size;
+                }
+            }
+        }
+        return -1;
+    }
+
+
     public static boolean checkFileExist(FileSystem fs, String fileName) {
         boolean findName = false;
         flag:
@@ -26,6 +39,7 @@ public class MethodsForFunctions {
         }
         return findName;
     }
+
 
     public static int howMuchSpace(FileSystem fs) {
         int space = 0;

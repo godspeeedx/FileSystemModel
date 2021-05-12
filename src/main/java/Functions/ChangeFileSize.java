@@ -14,20 +14,37 @@ public class ChangeFileSize extends BaseCommand implements iCommand {
         super(im, fileSystem);
     }
 
+    public static int changeFileSize(FileSystem fs, String name, int length) {
+        int check = MethodsForFunctions.takeFileLength(fs,name);
+        if(check == length) {
+            return 1;
+        }
+        if (DeleteFile.deleteFile(fs, name)) {
+            int isFileCreate = CreateFile.createFile(fs, name, length);
+            if (isFileCreate == 0) {
+                return 0;
+            } else if (isFileCreate == -1) {
+                return -1;
+            }
+        }
+        return -2;
+    }
+
     @Override
     public void execute(FileSystem fs) {
         readParameters();
-        if (DeleteFile.deleteFile(fs, fileName)) {
-            int isFileCreate = CreateFile.createFile(fs, this.fileName, this.fileLength);
-            if (isFileCreate == 0) {
-                monitor.writeMessage("Файл успешно создан");
-            } else if (isFileCreate == -1) {
-                monitor.writeMessage("Недостаточно свободного места");
-            } else if (isFileCreate == 1) {
-                monitor.writeMessage("Файл уже существует");
-            }
-        } else {
+        int create = changeFileSize(fs, this.fileName, this.fileLength);
+
+        int isFileCreate = CreateFile.createFile(fs, this.fileName, this.fileLength);
+        if (create == 0) {
+            monitor.writeMessage("Размер файла успешно изменён");
+        } else if (create == -1) {
+            monitor.writeMessage("Изменить размер файла не удалось, " +
+                    "так как недостаточно свободного места");
+        } else if (create == -2) {
             monitor.writeMessage("Файл не был найден");
+        } else if (create == 1){
+            monitor.writeMessage("Новая длина файла соответсвует текущей");
         }
         monitor.writeMessage(MethodsForFunctions.saveSystem(fs));
 

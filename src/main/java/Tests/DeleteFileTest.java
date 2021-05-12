@@ -68,6 +68,8 @@ public class DeleteFileTest {
         FileSystem actual = new FileSystem("Test2", 11, 2, 2);
         ArrayList<Segment> expected = new ArrayList<>();
 
+        System.out.println("Тестирование функции удаления файла из системы: " + "\n");
+
         //Заполнмим нашу систему
         CreateFile.createFile(actual, "first", 1);
         CreateFile.createFile(actual, "second", 2);
@@ -83,26 +85,26 @@ public class DeleteFileTest {
         expected.get(1).currentDataNum = 2;
 
         //удалим один элемент с конца
-        System.out.println("удалим один элемент с конца");
+        System.out.println("- Удаление последнего элемента");
         DeleteFile.deleteFile(actual, "forth");
         expected.get(1).datas.get(1).type = false;
         expected.get(1).currentDataNum = 1;
         Assert.assertEquals(expected, actual.segments);
 
         //удалим эллемент с самого первого сегмента
-        System.out.println("удалим эллемент с самого первого сегмента");
+        System.out.println("- Удаление первого элемента");
         expected.get(0).datas.get(0).type = false;
         expected.get(0).currentDataNum = 1;
         DeleteFile.deleteFile(actual, "first");
         Assert.assertEquals(expected, actual.segments);
 
         //попробуем удалить элемент, которого нет
-        System.out.println("попробуем удалить элемент, которого нет");
+        System.out.println("- Неуспешная попытка удаления не существующего элемента");
         DeleteFile.deleteFile(actual, "lol");
         Assert.assertEquals(expected, actual.segments);
 
         //удалим всю систему
-        System.out.println("Удалим всю систему");
+        System.out.println("- Удаление всей файловый системы");
         DeleteFile.deleteFile(actual,"second");
         DeleteFile.deleteFile(actual,"third");
         expected.get(0).datas.get(1).type = false;
@@ -112,20 +114,9 @@ public class DeleteFileTest {
         Assert.assertEquals(expected, actual.segments);
 
         // попробуем удалить удалённый
-        System.out.println(" попробуем удалить удалённый");
+        System.out.println("- Неуспешная попытка удаления элемента, который был удалён ранее");
         DeleteFile.deleteFile(actual,"second");
         Assert.assertEquals(expected, actual.segments);
     }
 
-    @Test
-    public void deleteFile() {
-    }
-
-    @Test
-    public void execute() {
-    }
-
-    @Test
-    public void readParameters() {
-    }
 }
