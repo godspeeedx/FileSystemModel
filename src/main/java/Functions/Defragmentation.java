@@ -13,9 +13,7 @@ public class Defragmentation extends BaseCommand implements iCommand {
     public Defragmentation(iMonitor im, FileSystem fileSystem) {
         super(im, fileSystem);
     }
-
-    @Override
-    public void execute(FileSystem fs) {
+    public static void defragmentation(FileSystem fs){
         //создаём процессор дефрагментации
         FSDProcessor processor = new FSDProcessor();
         //меняем местами дырки файлами
@@ -24,8 +22,20 @@ public class Defragmentation extends BaseCommand implements iCommand {
         processor.deleteHoles(fs);
         //сжимаем фс
         processor.squeezeFS(fs);
+    }
+    @Override
+    public void execute(FileSystem fs) {
+        if (MethodsForFunctions.checkDef(fs)){
+            monitor.writeMessage("Степень фрагментации "
+                    + MethodsForFunctions.defragExt(fs)+ ". Дефрагментация необходима.");
+            defragmentation(fs);
+            monitor.writeMessage(MethodsForFunctions.saveSystem(fs));
+        }
+        else{
+            monitor.writeMessage("Степень фрагментации "
+                    + MethodsForFunctions.defragExt(fs)+ ". Дефрагментация не нужна.");
+        }
 
-        monitor.writeMessage(MethodsForFunctions.saveSystem(fs));
     }
 
     @Override
@@ -35,9 +45,9 @@ public class Defragmentation extends BaseCommand implements iCommand {
 
     private static class FSDProcessor{
         //сегменты, которые в процессе обработки заполнились файлами до конца и их нужно очистить от дырок
-        private ArrayList<Segment> segmentsToClean = new ArrayList<>();
+        private final ArrayList<Segment> segmentsToClean = new ArrayList<>();
         //контейнер с блоками,пригодными к обработке
-        private HashMap<Integer,LinkedList<Block>> pinsContainer = new HashMap<>();
+        private final HashMap<Integer,LinkedList<Block>> pinsContainer = new HashMap<>();
         //затыкаем дырки блоками
         public void swapPinsAndHoles(FileSystem fs){
             boolean checkFirstStep = true, checkSecondStep = true;
@@ -232,11 +242,10 @@ public class Defragmentation extends BaseCommand implements iCommand {
                     for (int j = segment.datas.size() - 1; j >= 0; j--) {
                         Data data = segment.datas.get(j);
                         if (data.isType() && data.getSize() == hole.getSize()) {
-                            Data tmp = data;
                             data.setType(false);
                             data.setName(hole.getName());
                             segment.currentDataNum--;
-                            return tmp;
+                            return data;
                         }
                     }
                 }

@@ -8,11 +8,13 @@ import com.google.gson.GsonBuilder;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 
 public class MethodsForFunctions {
 
-    public static int takeFileLength(FileSystem fs, String fileName){
+    public static int takeFileLength(FileSystem fs, String fileName) {
         for (int i = 0; i < fs.segments.size(); i++) {
             for (int j = 0; j < fs.segments.get(i).datas.size(); j++) {
                 if (fs.segments.get(i).datas.get(j).type &&
@@ -132,7 +134,8 @@ public class MethodsForFunctions {
         }
         return 0;
     }
-    public static int averageLengthToInsert(FileSystem fs){
+
+    public static double averageLengthToInsert(FileSystem fs) {
         int sum = 0;
         int n = 0;
         for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
@@ -143,20 +146,30 @@ public class MethodsForFunctions {
                 }
             }
         }
-        return n != 0 ? sum / n : 0;
+        if (maxLengthToInsert(fs) == howMuchSpace(fs)) return maxLengthToInsert(fs);
+        return n != 0 ? (double) sum / n : 0;
     }
 
     public static boolean checkDef(FileSystem fs) {
-        return defragExt(fs) > 0.2;
+        return defragExt(fs) > 0.15;
     }
 
-    public static int defragExt(FileSystem fs) {
+    public static double defragExt(FileSystem fs) {
         int space = MethodsForFunctions.howMuchSpace(fs);
-        int usedSpace = FileSystem.systemSize - space;
-        int maxLength = MethodsForFunctions.maxLengthToInsert(fs);
-        int averageLength = MethodsForFunctions.averageLengthToInsert(fs);
+        double maxLength = MethodsForFunctions.maxLengthToInsert(fs);
+        double averageLength = MethodsForFunctions.averageLengthToInsert(fs);
+        if (maxLength == 0) return 0;
+        double a;
+        try {
+            a = 1 - (((maxLength / space) + averageLength / maxLength) / 2);
+        } catch (ArithmeticException ae) {
+            System.out.println("ArithmeticException occured!");
+            a = 0;
+        }
+        BigDecimal bd = new BigDecimal(Double.toString(a));
+        bd = bd.setScale(4, RoundingMode.HALF_UP);
+        return bd.doubleValue();
 
-        return (usedSpace / space + space / maxLength + averageLength / maxLength) / 3;
     }
 
 }

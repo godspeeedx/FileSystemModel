@@ -5,7 +5,7 @@ import Structure.struct.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-import static Monitor.RegistredCommands.registredCommands;
+import static Monitor.RegistredCommands.registeredCommands;
 
 public class MonitorClass implements iMonitor {
     FileSystem fs;
@@ -17,20 +17,18 @@ public class MonitorClass implements iMonitor {
     public iCommand runStart(String commandName) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
         if (commandName.equals("СОЗДАТЬ СИСТЕМУ") || commandName.equals("ЗАГРУЗИТЬ СИСТЕМУ")) {
-            var commandClassName = registredCommands.get(commandName);
+            var commandClassName = registeredCommands.get(commandName);
             var constr = Class.forName(commandClassName).getConstructor(iMonitor.class, FileSystem.class);
-            var command = (iCommand) constr.newInstance(this, fs); //fs,
-            return command;
+            return (iCommand) constr.newInstance(this, fs);
         }
         return null;
     }
 
 
     public iCommand runFunction(String commandName) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        var commandClassName = registredCommands.get(commandName);
+        var commandClassName = registeredCommands.get(commandName);
         var constr = Class.forName(commandClassName).getConstructor(iMonitor.class, FileSystem.class);
-        var command = (iCommand) constr.newInstance(this, fs); //fs,
-        return command;
+        return (iCommand) constr.newInstance(this, fs);
     }
 
     @Override

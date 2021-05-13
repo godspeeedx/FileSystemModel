@@ -4,7 +4,7 @@ import Structure.struct.FileSystem;
 import Structure.struct.iCommand;
 import Structure.struct.iMonitor;
 
-import static Monitor.RegistredCommands.registredCommands;
+import static Monitor.RegistredCommands.registeredCommands;
 
 public class Help extends BaseCommand implements iCommand {
 
@@ -17,7 +17,7 @@ public class Help extends BaseCommand implements iCommand {
     @Override
     public void execute(FileSystem fs) {
         monitor.writeMessage("В системе предусмотрен целый ряд команд:");
-        for (String key : registredCommands.keySet()) {
+        for (String key : registeredCommands.keySet()) {
             monitor.writeMessage("* " + key);
         }
         monitor.writeMessage("Если нужно подробнее об одной из них, введите её название. Если нет - введите ВЫХОД.");
