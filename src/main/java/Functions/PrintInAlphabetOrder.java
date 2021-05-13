@@ -18,7 +18,7 @@ public class PrintInAlphabetOrder extends BaseCommand implements iCommand {
         if (fs.segments.size() == 0) {
             return "Файловая система пуста";
         } else {
-            ArrayList<Data> arrayList = new ArrayList<Data>();
+            ArrayList<Data> arrayList = new ArrayList<>();
             for (int i = 0; i < fs.segments.size(); i++) {
                 for (int j = 0; j < fs.segments.get(i).datas.size(); j++) {
                     if (fs.segments.get(i).datas.get(j).type) {
@@ -31,12 +31,12 @@ public class PrintInAlphabetOrder extends BaseCommand implements iCommand {
             if (arrayList.size() == 0) {
                 return "Файловая система пуста";
             } else {
-                String files = "";
-                Collections.sort(arrayList, Comparator.comparing(Data::getName));
-                for (int i = 0; i < arrayList.size(); i++) {
-                    files += arrayList.get(i).name + " " + arrayList.get(i).size + "\n";
+                StringBuilder files = new StringBuilder();
+                arrayList.sort(Comparator.comparing(Data::getName));
+                for (Data data : arrayList) {
+                    files.append(data.name).append(" ").append(data.size).append("\n");
                 }
-                return files;
+                return files.toString();
             }
         }
     }

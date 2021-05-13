@@ -2,7 +2,6 @@ package Functions;
 
 import Structure.struct.*;
 
-import java.util.Scanner;
 
 public class CreateFile extends BaseCommand implements iCommand {
     protected String fileName;
@@ -38,7 +37,7 @@ public class CreateFile extends BaseCommand implements iCommand {
                                 } // если меньшк и следующий удалён
                                 else {
                                     if (j + 1 < fs.segments.get(i).datas.size()
-                                            && fs.segments.get(i).datas.get(j + 1).type == false) {
+                                            && !fs.segments.get(i).datas.get(j + 1).type) {
                                         int difference = fs.segments.get(i).datas.get(j).size - length;
                                         fs.segments.get(i).datas.get(j).type = true;
                                         fs.segments.get(i).datas.get(j).name = filename;

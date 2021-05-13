@@ -50,8 +50,7 @@ public class MethodsForFunctions {
                 }
             }
         }
-        space = FileSystem.systemSize - space;
-        return space;
+        return FileSystem.systemSize - space;
     }
 
     public static boolean possibleToInsert(FileSystem fs, int length) {
@@ -133,13 +132,31 @@ public class MethodsForFunctions {
         }
         return 0;
     }
+    public static int averageLengthToInsert(FileSystem fs){
+        int sum = 0;
+        int n = 0;
+        for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
+            for (int j = 0; j < fs.segments.get(i).datas.size(); j++) { // пробег по записям  в сегменте
+                if (!fs.segments.get(i).datas.get(j).type) {
+                    sum += fs.segments.get(i).datas.get(j).size;
+                    n++;
+                }
+            }
+        }
+        return n != 0 ? sum / n : 0;
+    }
 
     public static boolean checkDef(FileSystem fs) {
-        return false;
+        return defragExt(fs) > 0.2;
     }
 
     public static int defragExt(FileSystem fs) {
-        return 0;
+        int space = MethodsForFunctions.howMuchSpace(fs);
+        int usedSpace = FileSystem.systemSize - space;
+        int maxLength = MethodsForFunctions.maxLengthToInsert(fs);
+        int averageLength = MethodsForFunctions.averageLengthToInsert(fs);
+
+        return (usedSpace / space + space / maxLength + averageLength / maxLength) / 3;
     }
 
 }

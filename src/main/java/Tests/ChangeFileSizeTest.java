@@ -22,7 +22,7 @@ public class ChangeFileSizeTest {
         ArrayList<Segment> expected = new ArrayList<>();
         System.out.println("Тестирование функции изменения размера файла: " + "\n");
 
-        //Заполнмим нашу систему
+        //Заполним нашу систему
         CreateFile.createFile(actual, "first", 1);
         CreateFile.createFile(actual, "second", 2);
         CreateFile.createFile(actual, "third", 3);

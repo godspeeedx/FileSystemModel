@@ -16,12 +16,7 @@ public class GetSysInfo extends BaseCommand implements iCommand {
         int maxLength = MethodsForFunctions.maxLengthToInsert(fs);
         monitor.writeMessage("Осталось вот столько памяти " + space);
         monitor.writeMessage("Максимальный кусок,который можно вставить " + maxLength);
-        try {
-            monitor.writeMessage("Степень фрагментации " + (1 - (double) maxLength / space));
-        } catch (ArithmeticException ae) {
-            monitor.writeMessage("Степень фрагментации " + 0);
-        }
-
+        monitor.writeMessage("Степень фрагментации " + MethodsForFunctions.defragExt(fs));
     }
 
     @Override

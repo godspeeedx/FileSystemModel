@@ -4,7 +4,6 @@ import Structure.struct.FileSystem;
 import Structure.struct.iCommand;
 import Structure.struct.iMonitor;
 
-import java.util.Scanner;
 
 public class ChangeFileSize extends BaseCommand implements iCommand {
     protected String fileName;
