@@ -77,8 +77,7 @@ public class MethodsForFunctions {
 
                         } else {
                             if (i + 1 == fs.segments.size() && j + 1 == fs.segments.get(i).datas.size()) {
-                                if (FileSystem.systemSize - Segment.lastBlockNumber -
-                                        fs.segments.get(i).datas.get(j).size > length) {
+                                if (MethodsForFunctions.howMuchSpace(fs) >= length)  {
                                     return true; // файл успешно создан
                                 }
                             }
