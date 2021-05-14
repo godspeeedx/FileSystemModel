@@ -1,4 +1,5 @@
 package Tests;
+
 import Functions.CreateFile;
 import Functions.Defragmentation;
 import Functions.DeleteFile;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 public class DefragmentationTest {
+
 
     @Test
     public void OneFileReplacedWithOneFile() {
@@ -40,13 +42,14 @@ public class DefragmentationTest {
         expected.get(1).dataRecords.add(new DataRecord("5", 2));
         expected.get(2).dataRecords.add(new DataRecord("6", 3));
 
+
         expected.get(0).currentDataNum = 2;
         expected.get(1).currentDataNum = 2;
         expected.get(2).currentDataNum = 1;
         /*
         зона выполнения кода
          */
-        DeleteFile.deleteFile(actual,"2");
+        DeleteFile.deleteFile(actual, "2");
         Defragmentation.defragmentation(actual);
 
         // проверка
@@ -76,12 +79,12 @@ public class DefragmentationTest {
         expected.add(new Segment(2));
         expected.add(new Segment(1));
 
-        expected.get(0).dataRecords.add(new DataRecord("1", 5));
-        expected.get(0).dataRecords.add(new DataRecord("5", 2));
-        expected.get(1).dataRecords.add(new DataRecord("6", 3));
-        expected.get(1).dataRecords.add(new DataRecord("3",1));
-        expected.get(2).dataRecords.add(new DataRecord("4", 6));
 
+        expected.get(0).dataRecords.add(new DataRecord("1", 5));
+        expected.get(0).dataRecords.add(new DataRecord("6", 3));
+        expected.get(1).dataRecords.add(new DataRecord("3", 1));
+        expected.get(1).dataRecords.add(new DataRecord("4", 6));
+        expected.get(2).dataRecords.add(new DataRecord("5", 2));
 
         expected.get(0).currentDataNum = 2;
         expected.get(1).currentDataNum = 2;
@@ -89,7 +92,7 @@ public class DefragmentationTest {
         /*
         зона выполнения кода
          */
-        DeleteFile.deleteFile(actual,"2");
+        DeleteFile.deleteFile(actual, "2");
         Defragmentation.defragmentation(actual);
 
         // проверка
@@ -119,10 +122,12 @@ public class DefragmentationTest {
         expected.add(new Segment(1));
 
         expected.get(0).dataRecords.add(new DataRecord("1", 5));
-        expected.get(0).dataRecords.add(new DataRecord("2", 6));
+        expected.get(0).dataRecords.add(new DataRecord("2", 5));
         expected.get(1).dataRecords.add(new DataRecord("4", 6));
-        expected.get(1).dataRecords.add(new DataRecord("5", 2));
-        expected.get(2).dataRecords.add(new DataRecord("6", 3));
+        expected.get(1).dataRecords.add(new DataRecord("6", 3));
+        expected.get(2).dataRecords.add(new DataRecord("5", 2));
+
+
 
         expected.get(0).currentDataNum = 2;
         expected.get(1).currentDataNum = 2;
@@ -130,7 +135,7 @@ public class DefragmentationTest {
         /*
         зона выполнения кода
          */
-        DeleteFile.deleteFile(actual,"3");
+        DeleteFile.deleteFile(actual, "3");
         Defragmentation.defragmentation(actual);
 
         // проверка
@@ -138,3 +143,4 @@ public class DefragmentationTest {
 
     }
 }
+
