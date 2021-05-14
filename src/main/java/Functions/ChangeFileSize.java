@@ -14,15 +14,18 @@ public class ChangeFileSize extends BaseCommand implements iCommand {
     }
 
     public static int changeFileSize(FileSystem fs, String name, int length) {
-        int check = MethodsForFunctions.takeFileLength(fs,name);
-        if(check == length) {
+        int check = MethodsForFunctions.takeFileLength(fs, name);
+        if (check == length) {
             return 1;
         }
+        int[] positions = MethodsForFunctions.takeFilePosition(fs, name);
         if (DeleteFile.deleteFile(fs, name)) {
             int isFileCreate = CreateFile.createFile(fs, name, length);
             if (isFileCreate == 0) {
                 return 0;
             } else if (isFileCreate == -1) {
+                fs.segments.get(positions[0]).dataRecords.get(positions[1]).type = true;
+                fs.segments.get(positions[0]).currentDataNum += 1;
                 return -1;
             }
         }
@@ -42,7 +45,7 @@ public class ChangeFileSize extends BaseCommand implements iCommand {
                     "так как недостаточно свободного места");
         } else if (create == -2) {
             monitor.writeMessage("Файл не был найден");
-        } else if (create == 1){
+        } else if (create == 1) {
             monitor.writeMessage("Новая длина файла соответсвует текущей");
         }
         monitor.writeMessage(MethodsForFunctions.saveSystem(fs));

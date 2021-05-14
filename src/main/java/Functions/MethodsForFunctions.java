@@ -1,7 +1,6 @@
 package Functions;
 
 import Structure.struct.FileSystem;
-import Structure.struct.Segment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -16,24 +15,38 @@ public class MethodsForFunctions {
 
     public static int takeFileLength(FileSystem fs, String fileName) {
         for (int i = 0; i < fs.segments.size(); i++) {
-            for (int j = 0; j < fs.segments.get(i).datas.size(); j++) {
-                if (fs.segments.get(i).datas.get(j).type &&
-                        fs.segments.get(i).datas.get(j).getName().equals(fileName)) {
-                    return fs.segments.get(i).datas.get(j).size;
+            for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) {
+                if (fs.segments.get(i).dataRecords.get(j).type &&
+                        fs.segments.get(i).dataRecords.get(j).getName().equals(fileName)) {
+                    return fs.segments.get(i).dataRecords.get(j).size;
                 }
             }
         }
         return -1;
     }
 
+    public static int[] takeFilePosition(FileSystem fs, String fileName) {
+        int[] positions = {-1, -1};
+        for (int i = 0; i < fs.segments.size(); i++) {
+            for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) {
+                if (fs.segments.get(i).dataRecords.get(j).type &&
+                        fs.segments.get(i).dataRecords.get(j).getName().equals(fileName)) {
+                    positions[0] = i;
+                    positions[1] = j;
+                    return positions;
+                }
+            }
+        }
+        return positions;
+    }
 
     public static boolean checkFileExist(FileSystem fs, String fileName) {
         boolean findName = false;
         flag:
         for (int i = 0; i < fs.segments.size(); i++) {
-            for (int j = 0; j < fs.segments.get(i).datas.size(); j++) {
-                if (fs.segments.get(i).datas.get(j).type &&
-                        fs.segments.get(i).datas.get(j).getName().equals(fileName)) {
+            for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) {
+                if (fs.segments.get(i).dataRecords.get(j).type &&
+                        fs.segments.get(i).dataRecords.get(j).getName().equals(fileName)) {
                     findName = true;
                     break flag;
                 }
@@ -46,9 +59,9 @@ public class MethodsForFunctions {
     public static int howMuchSpace(FileSystem fs) {
         int space = 0;
         for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
-            for (int j = 0; j < fs.segments.get(i).datas.size(); j++) { // пробег по записям  в сегменте
-                if (fs.segments.get(i).datas.get(j).type) {
-                    space += fs.segments.get(i).datas.get(j).size;
+            for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) { // пробег по записям  в сегменте
+                if (fs.segments.get(i).dataRecords.get(j).type) {
+                    space += fs.segments.get(i).dataRecords.get(j).size;
                 }
             }
         }
@@ -58,26 +71,26 @@ public class MethodsForFunctions {
     public static boolean possibleToInsert(FileSystem fs, int length) {
         if (length <= MethodsForFunctions.howMuchSpace(fs)) {
             for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
-                for (int j = 0; j < fs.segments.get(i).datas.size(); j++) { // пробег по сзаписям  в сегменте
-                    if (!fs.segments.get(i).datas.get(j).type) { // вставляем на удалённое, когда всё совпало
-                        if (length == fs.segments.get(i).datas.get(j).size) {
+                for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) { // пробег по сзаписям  в сегменте
+                    if (!fs.segments.get(i).dataRecords.get(j).type) { // вставляем на удалённое, когда всё совпало
+                        if (length == fs.segments.get(i).dataRecords.get(j).size) {
                             return true;
                         } // случ когда вставляем в самый конец при том, что она была удалена
-                        else if (length < fs.segments.get(i).datas.get(j).size) {
-                            if ((j != fs.maxDataNum - 1 && fs.segments.get(i).datas.size() - j == 1) ||
+                        else if (length < fs.segments.get(i).dataRecords.get(j).size) {
+                            if ((j != fs.maxDataNum - 1 && fs.segments.get(i).dataRecords.size() - j == 1) ||
                                     (j == fs.maxDataNum - 1 && fs.segments.size() - i == 1)) {
                                 return true; // файл успешно создан
                             } // если меньшк и следующий удалён
                             else {
-                                if (j + 1 < fs.segments.get(i).datas.size()
-                                        && !fs.segments.get(i).datas.get(j + 1).type) {
+                                if (j + 1 < fs.segments.get(i).dataRecords.size()
+                                        && !fs.segments.get(i).dataRecords.get(j + 1).type) {
                                     return true; // файл успешно создан
                                 }
                             }
 
                         } else {
-                            if (i + 1 == fs.segments.size() && j + 1 == fs.segments.get(i).datas.size()) {
-                                if (MethodsForFunctions.howMuchSpace(fs) >= length)  {
+                            if (i + 1 == fs.segments.size() && j + 1 == fs.segments.get(i).dataRecords.size()) {
+                                if (MethodsForFunctions.howMuchSpace(fs) >= length) {
                                     return true; // файл успешно создан
                                 }
                             }
@@ -90,7 +103,7 @@ public class MethodsForFunctions {
                 return true;
             }
             int segmentSize = fs.segments.size() - 1;
-            if (fs.segments.get(segmentSize).datas.size() != fs.maxDataNum) {
+            if (fs.segments.get(segmentSize).dataRecords.size() != fs.maxDataNum) {
                 return true;
             }
             // Если добавляем в новый сегмент
@@ -138,9 +151,9 @@ public class MethodsForFunctions {
         int sum = 0;
         int n = 0;
         for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
-            for (int j = 0; j < fs.segments.get(i).datas.size(); j++) { // пробег по записям  в сегменте
-                if (!fs.segments.get(i).datas.get(j).type) {
-                    sum += fs.segments.get(i).datas.get(j).size;
+            for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) { // пробег по записям  в сегменте
+                if (!fs.segments.get(i).dataRecords.get(j).type) {
+                    sum += fs.segments.get(i).dataRecords.get(j).size;
                     n++;
                 }
             }

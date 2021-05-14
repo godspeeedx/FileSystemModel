@@ -19,10 +19,10 @@ public class Print extends BaseCommand implements iCommand {
             StringBuilder string = new StringBuilder();
             for (int i = 0; i < fs.segments.size(); i++) {
                 string.append("Сегмент ").append(i).append("\n");
-                for (int j = 0; j < fs.segments.get(i).datas.size(); j++) {
-                    if (fs.segments.get(i).datas.get(j).type) {
+                for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) {
+                    if (fs.segments.get(i).dataRecords.get(j).type) {
                         isFile = true;
-                        string.append(fs.segments.get(i).datas.get(j).name).append(" ").append(fs.segments.get(i).datas.get(j).size).append("\n");
+                        string.append(fs.segments.get(i).dataRecords.get(j).name).append(" ").append(fs.segments.get(i).dataRecords.get(j).size).append("\n");
                     }
                 }
             }

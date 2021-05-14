@@ -6,9 +6,7 @@ import Structure.struct.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.management.monitor.Monitor;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class DeleteFileTest {
@@ -77,23 +75,23 @@ public class DeleteFileTest {
         CreateFile.createFile(actual, "forth", 4);
         expected.add(new Segment(2));
         expected.add(new Segment(2));
-        expected.get(0).datas.add(new Data("first", 1));
-        expected.get(0).datas.add(new Data("second", 2));
+        expected.get(0).dataRecords.add(new DataRecord("first", 1));
+        expected.get(0).dataRecords.add(new DataRecord("second", 2));
         expected.get(0).currentDataNum = 2;
-        expected.get(1).datas.add(new Data("third", 3));
-        expected.get(1).datas.add(new Data("forth", 4));
+        expected.get(1).dataRecords.add(new DataRecord("third", 3));
+        expected.get(1).dataRecords.add(new DataRecord("forth", 4));
         expected.get(1).currentDataNum = 2;
 
         //удалим один элемент с конца
         System.out.println("- Удаление последнего элемента");
         DeleteFile.deleteFile(actual, "forth");
-        expected.get(1).datas.get(1).type = false;
+        expected.get(1).dataRecords.get(1).type = false;
         expected.get(1).currentDataNum = 1;
         Assert.assertEquals(expected, actual.segments);
 
         //удалим эллемент с самого первого сегмента
         System.out.println("- Удаление первого элемента");
-        expected.get(0).datas.get(0).type = false;
+        expected.get(0).dataRecords.get(0).type = false;
         expected.get(0).currentDataNum = 1;
         DeleteFile.deleteFile(actual, "first");
         Assert.assertEquals(expected, actual.segments);
@@ -107,9 +105,9 @@ public class DeleteFileTest {
         System.out.println("- Удаление всей файловый системы");
         DeleteFile.deleteFile(actual,"second");
         DeleteFile.deleteFile(actual,"third");
-        expected.get(0).datas.get(1).type = false;
+        expected.get(0).dataRecords.get(1).type = false;
         expected.get(0).currentDataNum = 0;
-        expected.get(1).datas.get(0).type = false;
+        expected.get(1).dataRecords.get(0).type = false;
         expected.get(1).currentDataNum = 0;
         Assert.assertEquals(expected, actual.segments);
 
