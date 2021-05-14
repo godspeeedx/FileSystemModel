@@ -8,7 +8,6 @@ import Structure.struct.FileSystem;
 import Structure.struct.Segment;
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.util.ArrayList;
 
 public class DefragmentationTest {
