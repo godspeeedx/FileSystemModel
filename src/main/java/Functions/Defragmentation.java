@@ -1,6 +1,6 @@
 package Functions;
 
-import Structure.struct.Data;
+import Structure.struct.DataRecord;
 import Structure.struct.FileSystem;
 import Structure.struct.Segment;
 import Structure.struct.iCommand;
@@ -68,15 +68,15 @@ public class Defragmentation extends BaseCommand implements iCommand {
             int swapCount=0;
             for(int i=0; i<fs.segments.size();i++){
                 Segment segment = fs.segments.get(i);
-                for (int j = 0; j < segment.datas.size(); j++) {
-                    Data data = segment.datas.get(j);
-                    if (!data.isType()) {
+                for (int j = 0; j < segment.dataRecords.size(); j++) {
+                    DataRecord dataRecord = segment.dataRecords.get(j);
+                    if (!dataRecord.isType()) {
                         if(segment.currentDataNum < fs.maxDataNum) {
-                            Data pin = findPin(fs, data, i, j);
+                            DataRecord pin = findPin(fs, dataRecord, i, j);
                             if (pin != null) {
-                                data.setName(pin.getName());
-                                data.setType(true);
-                                data.setName(pin.getName());
+                                dataRecord.setName(pin.getName());
+                                dataRecord.setType(true);
+                                dataRecord.setName(pin.getName());
                                 segment.currentDataNum++;
                                 swapCount++;
                             }
@@ -92,28 +92,28 @@ public class Defragmentation extends BaseCommand implements iCommand {
             return swapCount != 0;
         }
         //ищем файл подходящего размера, начиная с конца фс и до дырки, которую планируем этим фалйом заткнуть
-        private Data findPin(FileSystem fs, Data hole, int holeSegmentIndex, int holeDataIndex ){
+        private DataRecord findPin(FileSystem fs, DataRecord hole, int holeSegmentIndex, int holeDataIndex ){
             for(int i=fs.segments.size()-1; i>=holeSegmentIndex;i--){
                 Segment segment = fs.segments.get(i);
                 if (i==holeSegmentIndex){
-                    for (int j = segment.datas.size() - 1; j > holeDataIndex; j--) {
-                        Data data = segment.datas.get(j);
-                        if (data.isType() && data.getSize() == hole.getSize()) {
-                            Data tmp = new Data(data.getName(),data.getSize());
-                            data.setType(false);
-                            data.setName(hole.getName());
+                    for (int j = segment.dataRecords.size() - 1; j > holeDataIndex; j--) {
+                        DataRecord dataRecord = segment.dataRecords.get(j);
+                        if (dataRecord.isType() && dataRecord.getSize() == hole.getSize()) {
+                            DataRecord tmp = new DataRecord(dataRecord.getName(), dataRecord.getSize());
+                            dataRecord.setType(false);
+                            dataRecord.setName(hole.getName());
                             segment.currentDataNum--;
                             return tmp;
                         }
                     }
                 }
                 else if (i>holeSegmentIndex){
-                    for (int j = segment.datas.size() - 1; j >= 0; j--) {
-                        Data data = segment.datas.get(j);
-                        if (data.isType() && data.getSize() == hole.getSize()) {
-                            Data tmp = new Data(data.getName(),data.getSize());
-                            data.setType(false);
-                            data.setName(hole.getName());
+                    for (int j = segment.dataRecords.size() - 1; j >= 0; j--) {
+                        DataRecord dataRecord = segment.dataRecords.get(j);
+                        if (dataRecord.isType() && dataRecord.getSize() == hole.getSize()) {
+                            DataRecord tmp = new DataRecord(dataRecord.getName(), dataRecord.getSize());
+                            dataRecord.setType(false);
+                            dataRecord.setName(hole.getName());
                             segment.currentDataNum--;
                             return tmp;
                         }
@@ -127,17 +127,17 @@ public class Defragmentation extends BaseCommand implements iCommand {
             int swapCount=0;
             for(int i=0; i<fs.segments.size();i++) {
                 Segment segment = fs.segments.get(i);
-                for (int j = 0; j < segment.datas.size(); j++) {
-                    Data data = segment.datas.get(j);
-                    if (!data.isType()){
+                for (int j = 0; j < segment.dataRecords.size(); j++) {
+                    DataRecord dataRecord = segment.dataRecords.get(j);
+                    if (!dataRecord.isType()){
                         int freeSpace = fs.maxDataNum - segment.currentDataNum;
                         if(freeSpace>0) {
-                            if(data.getSize()>1){
-                                ArrayList<Data> pins = findSeveralPins(fs, data.getSize(), i, j, freeSpace);
+                            if(dataRecord.getSize()>1){
+                                ArrayList<DataRecord> pins = findSeveralPins(fs, dataRecord.getSize(), i, j, freeSpace);
                                 if(pins != null){
-                                    segment.datas.remove(data);
-                                    for(Data pin: pins){
-                                        segment.datas.add(pin);
+                                    segment.dataRecords.remove(dataRecord);
+                                    for(DataRecord pin: pins){
+                                        segment.dataRecords.add(pin);
                                         segment.currentDataNum++;
                                     }
                                     swapCount++;
@@ -154,17 +154,17 @@ public class Defragmentation extends BaseCommand implements iCommand {
             }
             return swapCount != 0;
         }
-        private ArrayList<Data> findSeveralPins(FileSystem fs, int reqSize,int holeSegmentIndex, int holeDataIndex, int freeSpace){
-            ArrayList<Data> pinsCombination = new ArrayList<>();
+        private ArrayList<DataRecord> findSeveralPins(FileSystem fs, int reqSize, int holeSegmentIndex, int holeDataIndex, int freeSpace){
+            ArrayList<DataRecord> pinsCombination = new ArrayList<>();
             for(int i=fs.segments.size()-1; i>=holeSegmentIndex;i--){
                 Segment segment = fs.segments.get(i);
                 if (i==holeSegmentIndex){
-                    for (int j = segment.datas.size() - 1; j > holeDataIndex; j--) {
-                        Data data = segment.datas.get(j);
-                        if (data.isType()) {
-                            if(data.getSize()<=reqSize) {
-                                pinsCombination.add(data);
-                                reqSize -= data.getSize();
+                    for (int j = segment.dataRecords.size() - 1; j > holeDataIndex; j--) {
+                        DataRecord dataRecord = segment.dataRecords.get(j);
+                        if (dataRecord.isType()) {
+                            if(dataRecord.getSize()<=reqSize) {
+                                pinsCombination.add(dataRecord);
+                                reqSize -= dataRecord.getSize();
                                 freeSpace--;
                                 if(reqSize==0){
                                     break;
@@ -182,12 +182,12 @@ public class Defragmentation extends BaseCommand implements iCommand {
                     }
                 }
                 else if (i>holeSegmentIndex){
-                    for (int j = segment.datas.size() - 1; j >= 0; j--) {
-                        Data data = segment.datas.get(j);
-                        if (data.isType()) {
-                            if(data.getSize()<=reqSize) {
-                                pinsCombination.add(data);
-                                reqSize -= data.getSize();
+                    for (int j = segment.dataRecords.size() - 1; j >= 0; j--) {
+                        DataRecord dataRecord = segment.dataRecords.get(j);
+                        if (dataRecord.isType()) {
+                            if(dataRecord.getSize()<=reqSize) {
+                                pinsCombination.add(dataRecord);
+                                reqSize -= dataRecord.getSize();
                                 freeSpace--;
                                 if(reqSize==0){
                                     break;
@@ -206,8 +206,8 @@ public class Defragmentation extends BaseCommand implements iCommand {
                 }
             }
             if(reqSize==0){
-                ArrayList<Data> pinsToReturn = new ArrayList<>(pinsCombination);
-                for (Data pin : pinsCombination){
+                ArrayList<DataRecord> pinsToReturn = new ArrayList<>(pinsCombination);
+                for (DataRecord pin : pinsCombination){
                     deletePinFromFS(pin,fs);
                 }
                 return pinsToReturn;
@@ -215,13 +215,13 @@ public class Defragmentation extends BaseCommand implements iCommand {
                 return null;
             }
         }
-        private void deletePinFromFS(Data pin, FileSystem fs){
+        private void deletePinFromFS(DataRecord pin, FileSystem fs){
             for(int i=fs.segments.size()-1; i>=0; i--){
-                for (int j=fs.segments.get(i).datas.size()-1;i>=0;i--){
-                    Data data = fs.segments.get(i).datas.get(j);
-                    if (data.getName()==pin.getName()&&data.isType()){
+                for (int j = fs.segments.get(i).dataRecords.size()-1; i>=0; i--){
+                    DataRecord dataRecord = fs.segments.get(i).dataRecords.get(j);
+                    if (dataRecord.getName()==pin.getName()&& dataRecord.isType()){
                         fs.segments.get(i).currentDataNum--;
-                        data.setType(false);
+                        dataRecord.setType(false);
                     }
                 }
             }
@@ -231,17 +231,17 @@ public class Defragmentation extends BaseCommand implements iCommand {
         public void clearGarbageFromSegments(FileSystem fs){
             for(Segment segment : segmentsToClean) {
                 int indexOfSegment = fs.segments.indexOf(segment);
-                fs.segments.get(indexOfSegment).datas.removeIf(data -> !data.isType());
+                fs.segments.get(indexOfSegment).dataRecords.removeIf(data -> !data.isType());
             }
             segmentsToClean.clear();
         }
         public void deleteHoles(FileSystem fs) {
             for(int i=0; i<fs.segments.size();i++) {
                 Segment segment = fs.segments.get(i);
-                for (int j = 0; j < segment.datas.size(); j++) {
-                    Data data = segment.datas.get(j);
-                    if (!data.isType()){
-                        segment.datas.remove(data);
+                for (int j = 0; j < segment.dataRecords.size(); j++) {
+                    DataRecord dataRecord = segment.dataRecords.get(j);
+                    if (!dataRecord.isType()){
+                        segment.dataRecords.remove(dataRecord);
                     }
                 }
             }
@@ -255,11 +255,11 @@ public class Defragmentation extends BaseCommand implements iCommand {
                     int lastSegmentIndex=fs.segments.size()-1;
                     if(currentSegmentIndex==lastSegmentIndex)
                         break;
-                    int lastDataIndex = fs.segments.get(lastSegmentIndex).datas.size()-1;
-                    Data dataToReplace = fs.segments.get(lastSegmentIndex).datas.get(lastDataIndex);
-                    segment.datas.add(dataToReplace);
+                    int lastDataIndex = fs.segments.get(lastSegmentIndex).dataRecords.size()-1;
+                    DataRecord dataRecordToReplace = fs.segments.get(lastSegmentIndex).dataRecords.get(lastDataIndex);
+                    segment.dataRecords.add(dataRecordToReplace);
                     segment.currentDataNum++;
-                    fs.segments.get(lastSegmentIndex).datas.remove(lastDataIndex);
+                    fs.segments.get(lastSegmentIndex).dataRecords.remove(lastDataIndex);
                     fs.segments.get(lastSegmentIndex).currentDataNum--;
                     if(fs.segments.get(lastSegmentIndex).currentDataNum==0){
                         fs.segments.remove(lastSegmentIndex);

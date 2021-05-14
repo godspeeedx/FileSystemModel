@@ -2,16 +2,13 @@ package Tests;
 
 import Functions.CreateFile;
 import Functions.DeleteFile;
-import Structure.struct.Data;
+import Structure.struct.DataRecord;
 import Structure.struct.FileSystem;
 import Structure.struct.Segment;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class CreateFileTest {
 
@@ -24,15 +21,15 @@ public class CreateFileTest {
 
         // добавим первый элемент
         expected.add(new Segment(3));
-        expected.get(0).datas.add(new Data("first", 4));
+        expected.get(0).dataRecords.add(new DataRecord("first", 4));
         expected.get(0).currentDataNum = 1;
         CreateFile.createFile(actual, "first", 4);
         System.out.println("- Добавление в систему первого элемента");
         Assert.assertEquals(expected, actual.segments);
 
         // добавим ещё 2 элемента
-        expected.get(0).datas.add(new Data("second", 2));
-        expected.get(0).datas.add(new Data("third", 3));
+        expected.get(0).dataRecords.add(new DataRecord("second", 2));
+        expected.get(0).dataRecords.add(new DataRecord("third", 3));
         System.out.println("- Добавление в систему ещё двух элементов");
         CreateFile.createFile(actual, "second", 2);
         CreateFile.createFile(actual, "third", 3);
@@ -42,7 +39,7 @@ public class CreateFileTest {
         //добавим 4-й эллемент
         System.out.println("- Добавление в систему 4-го элемента, который должен быть записан в новый сегмент");
         expected.add(new Segment(3));
-        expected.get(1).datas.add(new Data("forth", 4));
+        expected.get(1).dataRecords.add(new DataRecord("forth", 4));
         expected.get(1).currentDataNum = 1;
         CreateFile.createFile(actual, "forth", 4);
         Assert.assertEquals(expected, actual.segments);
@@ -63,7 +60,7 @@ public class CreateFileTest {
         System.out.println("- Добавление элемента в систему на место удалённого");
         DeleteFile.deleteFile(actual, "second");
         CreateFile.createFile(actual, "newsecond", 2);
-        expected.get(0).datas.set(1, new Data("newsecond", 2));
+        expected.get(0).dataRecords.set(1, new DataRecord("newsecond", 2));
         Assert.assertEquals(expected, actual.segments);
 
         // Добавим элемент меньший чем удалённый, если после него идёт пустой
@@ -72,17 +69,17 @@ public class CreateFileTest {
         DeleteFile.deleteFile(actual, "newsecond"); // был 2
         DeleteFile.deleteFile(actual, "first"); // был 4
         CreateFile.createFile(actual, "newfirst", 2);
-        expected.get(0).datas.get(1).type = false;
-        expected.get(0).datas.set(0, new Data("newfirst", 2));
+        expected.get(0).dataRecords.get(1).type = false;
+        expected.get(0).dataRecords.set(0, new DataRecord("newfirst", 2));
         expected.get(0).currentDataNum = 2;
-        expected.get(0).datas.get(1).size = 4;
+        expected.get(0).dataRecords.get(1).size = 4;
         Assert.assertEquals(expected, actual.segments);
 
         // когда добавляли прошлый, в след место увеличилось, добавим туда эллемент
         System.out.println("- Добавление в систему элемента на место удалённого файла, размер которого был " +
                 "увеличен из-за добавления в предыдущей итарации добавления");
-        expected.get(0).datas.get(1).name = "newSecond2";
-        expected.get(0).datas.get(1).type = true;
+        expected.get(0).dataRecords.get(1).name = "newSecond2";
+        expected.get(0).dataRecords.get(1).type = true;
         expected.get(0).currentDataNum = 3;
         CreateFile.createFile(actual, "newSecond2", 4);
         Assert.assertEquals(expected, actual.segments);
@@ -90,7 +87,7 @@ public class CreateFileTest {
         //добавим эллемент, который займёт всю память
         System.out.println("- Добавление в систему элемента, размер которого равен размеру свободной памяти");
         CreateFile.createFile(actual, "fifth", 7);
-        expected.get(1).datas.add(new Data("fifth", 7));
+        expected.get(1).dataRecords.add(new DataRecord("fifth", 7));
         expected.get(1).currentDataNum = 2;
         Assert.assertEquals(expected, actual.segments);
 
@@ -111,11 +108,11 @@ public class CreateFileTest {
         CreateFile.createFile(actual2, "forth", 4);
         expected2.add(new Segment(2));
         expected2.add(new Segment(2));
-        expected2.get(0).datas.add(new Data("first", 1));
-        expected2.get(0).datas.add(new Data("second", 2));
+        expected2.get(0).dataRecords.add(new DataRecord("first", 1));
+        expected2.get(0).dataRecords.add(new DataRecord("second", 2));
         expected2.get(0).currentDataNum = 2;
-        expected2.get(1).datas.add(new Data("third", 3));
-        expected2.get(1).datas.add(new Data("forth", 4));
+        expected2.get(1).dataRecords.add(new DataRecord("third", 3));
+        expected2.get(1).dataRecords.add(new DataRecord("forth", 4));
         expected2.get(1).currentDataNum = 2;
         Assert.assertEquals(expected2, actual2.segments);
 
@@ -133,7 +130,7 @@ public class CreateFileTest {
                 "добавление файла, размер которого больше размера удалённого");
         DeleteFile.deleteFile(actual2, "forth");
         CreateFile.createFile(actual2, "forth", 5);
-        expected2.get(1).datas.get(1).size = 5;
+        expected2.get(1).dataRecords.get(1).size = 5;
         Assert.assertEquals(expected2, actual2.segments);
 
         //система заполнена, удалим последний и добавим меньший
@@ -141,7 +138,7 @@ public class CreateFileTest {
                 "добавление файла, размер которого меньше размера удалённого");
         DeleteFile.deleteFile(actual2, "forth");
         CreateFile.createFile(actual2, "forth", 3);
-        expected2.get(1).datas.get(1).size = 3;
+        expected2.get(1).dataRecords.get(1).size = 3;
         Assert.assertEquals(expected2, actual2.segments);
 
     }

@@ -7,7 +7,7 @@ public class Segment {
     //static public final int lengthSegment = 10;
     public int firstBlockNumber; //Номер блока с которого начинаются файлы сегмента
 
-    public ArrayList<Data> datas; // Массив записей о файле
+    public ArrayList<DataRecord> dataRecords; // Массив записей о файле
     public int currentDataNum; //Число занятых записей
 
     @Override
@@ -25,11 +25,11 @@ public class Segment {
             return false;
         }
         //If both datas are not equal return false
-        if(this.datas.size()!= other.datas.size()){
+        if(this.dataRecords.size()!= other.dataRecords.size()){
             return false;
         }
-        for (int i = 0; i < this.datas.size(); i++) {
-            if(!this.datas.get(i).equals(other.datas.get(i))){
+        for (int i = 0; i < this.dataRecords.size(); i++) {
+            if(!this.dataRecords.get(i).equals(other.dataRecords.get(i))){
                 return false;
             }
         }
@@ -41,7 +41,7 @@ public class Segment {
     public Segment(int maxDataNum) {
       //  firstBlockNumber = lastBlockNumber ;
 
-        this.datas = new ArrayList<>(maxDataNum);
+        this.dataRecords = new ArrayList<>(maxDataNum);
         currentDataNum = 0;
     }
 }

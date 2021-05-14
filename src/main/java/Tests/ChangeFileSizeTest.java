@@ -2,15 +2,13 @@ package Tests;
 
 import Functions.ChangeFileSize;
 import Functions.CreateFile;
-import Structure.struct.Data;
+import Structure.struct.DataRecord;
 import Structure.struct.FileSystem;
 import Structure.struct.Segment;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 public class ChangeFileSizeTest {
 
@@ -28,17 +26,17 @@ public class ChangeFileSizeTest {
         CreateFile.createFile(actual, "third", 3);
         expected.add(new Segment(2));
         expected.add(new Segment(2));
-        expected.get(0).datas.add(new Data("first", 1));
-        expected.get(0).datas.add(new Data("second", 2));
+        expected.get(0).dataRecords.add(new DataRecord("first", 1));
+        expected.get(0).dataRecords.add(new DataRecord("second", 2));
         expected.get(0).currentDataNum = 2;
         expected.get(1).currentDataNum = 1;
-        expected.get(1).datas.add(new Data("third", 3));
+        expected.get(1).dataRecords.add(new DataRecord("third", 3));
 
         // Изменим размер файла, когда новый размер больше предыдущего и памяти хватает
         System.out.println("- Изменение размера файла, при условии," +
                 " что новый размер больше предыдущего и памяти хватает");
-        expected.get(0).datas.get(0).type = false;
-        expected.get(1).datas.add(new Data("first", 4));
+        expected.get(0).dataRecords.get(0).type = false;
+        expected.get(1).dataRecords.add(new DataRecord("first", 4));
         ChangeFileSize.changeFileSize(actual, "first", 4);
         expected.get(0).currentDataNum = 1;
         expected.get(1).currentDataNum = 2;
@@ -47,12 +45,12 @@ public class ChangeFileSizeTest {
         // Изменим размер файла, когда новый размер меньше предыдущего и памяти хватает
         System.out.println("- Изменение размера файла, при условии" +
                 " что новый размер меньше предыдущего и памяти хватает");
-        expected.get(1).datas.get(0).type = false;
+        expected.get(1).dataRecords.get(0).type = false;
         expected.get(0).currentDataNum = 2;
         expected.get(1).currentDataNum = 1;
-        expected.get(0).datas.get(0).name = "third";
-        expected.get(0).datas.get(0).type = true;
-        expected.get(0).datas.get(0).size = 1;
+        expected.get(0).dataRecords.get(0).name = "third";
+        expected.get(0).dataRecords.get(0).type = true;
+        expected.get(0).dataRecords.get(0).size = 1;
         ChangeFileSize.changeFileSize(actual, "third", 1);
         Assert.assertEquals(expected, actual.segments);
 
@@ -67,17 +65,17 @@ public class ChangeFileSizeTest {
                 " что новый размер больше предыдущего и свободной памяти нет");
         ChangeFileSize.changeFileSize(actual, "second", 24);
         expected.get(0).currentDataNum -= 1;
-        expected.get(0).datas.get(1).type = false;
+        expected.get(0).dataRecords.get(1).type = false;
         Assert.assertEquals(expected, actual.segments);
 
         // Изменим размер когда свободная память есть, но свободных сегментов нет
         System.out.println("- Неуспешная попытка изменения размера файла, при условии" +
                 " что свободная память есть, но позиции для этого файла нет");
         expected.add(new Segment(2));
-        expected.get(2).datas.add(new Data("5", 4));
+        expected.get(2).dataRecords.add(new DataRecord("5", 4));
         expected.get(2).currentDataNum = 1;
-        expected.get(2).datas.add(new Data("6", 4));
-        expected.get(2).datas.get(0).type = false;
+        expected.get(2).dataRecords.add(new DataRecord("6", 4));
+        expected.get(2).dataRecords.get(0).type = false;
         CreateFile.createFile(actual, "5", 4);
         CreateFile.createFile(actual, "6", 4);
         ChangeFileSize.changeFileSize(actual, "5", 5);

@@ -2,7 +2,7 @@ package Tests;
 import Functions.CreateFile;
 import Functions.Defragmentation;
 import Functions.DeleteFile;
-import Structure.struct.Data;
+import Structure.struct.DataRecord;
 import Structure.struct.FileSystem;
 import Structure.struct.Segment;
 import org.junit.Assert;
@@ -34,11 +34,11 @@ public class DefragmentationTest {
         expected.add(new Segment(2));
         expected.add(new Segment(1));
 
-        expected.get(0).datas.add(new Data("1", 5));
-        expected.get(0).datas.add(new Data("4", 6));
-        expected.get(1).datas.add(new Data("3", 1));
-        expected.get(1).datas.add(new Data("5", 2));
-        expected.get(2).datas.add(new Data("6", 3));
+        expected.get(0).dataRecords.add(new DataRecord("1", 5));
+        expected.get(0).dataRecords.add(new DataRecord("4", 6));
+        expected.get(1).dataRecords.add(new DataRecord("3", 1));
+        expected.get(1).dataRecords.add(new DataRecord("5", 2));
+        expected.get(2).dataRecords.add(new DataRecord("6", 3));
 
         expected.get(0).currentDataNum = 2;
         expected.get(1).currentDataNum = 2;
@@ -76,11 +76,11 @@ public class DefragmentationTest {
         expected.add(new Segment(2));
         expected.add(new Segment(1));
 
-        expected.get(0).datas.add(new Data("1", 5));
-        expected.get(0).datas.add(new Data("5", 2));
-        expected.get(1).datas.add(new Data("6", 3));
-        expected.get(1).datas.add(new Data("3",1));
-        expected.get(2).datas.add(new Data("4", 6));
+        expected.get(0).dataRecords.add(new DataRecord("1", 5));
+        expected.get(0).dataRecords.add(new DataRecord("5", 2));
+        expected.get(1).dataRecords.add(new DataRecord("6", 3));
+        expected.get(1).dataRecords.add(new DataRecord("3",1));
+        expected.get(2).dataRecords.add(new DataRecord("4", 6));
 
 
         expected.get(0).currentDataNum = 2;
@@ -118,11 +118,11 @@ public class DefragmentationTest {
         expected.add(new Segment(2));
         expected.add(new Segment(1));
 
-        expected.get(0).datas.add(new Data("1", 5));
-        expected.get(0).datas.add(new Data("2", 6));
-        expected.get(1).datas.add(new Data("4", 6));
-        expected.get(1).datas.add(new Data("5", 2));
-        expected.get(2).datas.add(new Data("6", 3));
+        expected.get(0).dataRecords.add(new DataRecord("1", 5));
+        expected.get(0).dataRecords.add(new DataRecord("2", 6));
+        expected.get(1).dataRecords.add(new DataRecord("4", 6));
+        expected.get(1).dataRecords.add(new DataRecord("5", 2));
+        expected.get(2).dataRecords.add(new DataRecord("6", 3));
 
         expected.get(0).currentDataNum = 2;
         expected.get(1).currentDataNum = 2;

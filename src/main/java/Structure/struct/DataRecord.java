@@ -1,14 +1,12 @@
 package Structure.struct;
 
-import Functions.CreateFile;
-
-public class Data {
+public class DataRecord {
     public boolean type; // существует или удалён
     public String name;
     public int size;// кол-во блоков
 
     //Создали
-    public Data(String name, int size) {
+    public DataRecord(String name, int size) {
         this.type = true;
         this.name = name;
         this.size = size;
@@ -24,7 +22,7 @@ public class Data {
             return false;
         }*/
 
-        final Data other = (Data) obj;
+        final DataRecord other = (DataRecord) obj;
 
         //If both types are not equal return false
         if (this.type != other.type) {
