@@ -28,7 +28,7 @@ public class CreateFile extends BaseCommand implements iCommand {
                                 if ((j != fs.maxDataNum - 1 && fs.segments.get(i).datas.size() - j == 1) ||
                                         (j == fs.maxDataNum - 1 && fs.segments.size() - i == 1)) {
                                     int difference = fs.segments.get(i).datas.get(j).size - length;
-                                    Segment.lastBlockNumber -= difference;
+                                   // Segment.lastBlockNumber -= difference;
                                     fs.segments.get(i).currentDataNum += 1;
                                     fs.segments.get(i).datas.get(j).type = true;
                                     fs.segments.get(i).datas.get(j).size = length;
@@ -51,8 +51,8 @@ public class CreateFile extends BaseCommand implements iCommand {
                             } else {
                                 if (i + 1 == fs.segments.size() && j + 1 == fs.segments.get(i).datas.size()) {
                                     if (MethodsForFunctions.howMuchSpace(fs) >= length) {
-                                        Segment.lastBlockNumber -= fs.segments.get(i).datas.get(j).size;
-                                        Segment.lastBlockNumber += length;
+                                       // Segment.lastBlockNumber -= fs.segments.get(i).datas.get(j).size;
+                                      //  Segment.lastBlockNumber += length;
                                         fs.segments.get(i).datas.get(j).type = true;
                                         fs.segments.get(i).datas.get(j).name = filename;
                                         fs.segments.get(i).currentDataNum += 1;
@@ -69,7 +69,7 @@ public class CreateFile extends BaseCommand implements iCommand {
                     fs.segments.add(new Segment(fs.maxDataNum));
                     fs.segments.get(0).datas.add(new Data(filename, length));
                     fs.segments.get(0).currentDataNum += 1;
-                    Segment.lastBlockNumber += length;
+                   // Segment.lastBlockNumber += length;
                     return 0;
                 }
                 int dataSize = fs.segments.get(fs.segments.size() - 1).datas.size() - 1;
@@ -77,7 +77,7 @@ public class CreateFile extends BaseCommand implements iCommand {
                 if (fs.segments.get(segmentSize).datas.size() != fs.maxDataNum) {
                         fs.segments.get(segmentSize).datas.add(new Data(filename, length));
                         fs.segments.get(segmentSize).currentDataNum += 1;
-                        Segment.lastBlockNumber += length;
+                      //  Segment.lastBlockNumber += length;
                         return 0; // файл успешно создан
                 }
                 // Если добавляем в новый сегмент
@@ -86,7 +86,7 @@ public class CreateFile extends BaseCommand implements iCommand {
                         fs.segments.add(new Segment(fs.maxDataNum));
                             fs.segments.get(segmentSize + 1).datas.add(new Data(filename, length));
                             fs.segments.get(segmentSize + 1).currentDataNum += 1;
-                            Segment.lastBlockNumber += length;
+                         //   Segment.lastBlockNumber += length;
                             return 0; // файл успешно создан
                         // не хватило места
                     }

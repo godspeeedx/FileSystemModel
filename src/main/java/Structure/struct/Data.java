@@ -20,7 +20,7 @@ public class Data {
             return false;
         }
 
-        /*if (CreateFile.class.isAssignableFrom(obj.getClass())) {
+        /*if (!CreateFile.class.isAssignableFrom(obj.getClass())) {
             return false;
         }*/
 

@@ -77,7 +77,7 @@ public class MethodsForFunctions {
 
                         } else {
                             if (i + 1 == fs.segments.size() && j + 1 == fs.segments.get(i).datas.size()) {
-                                if (MethodsForFunctions.howMuchSpace(fs) > length) {
+                                if (MethodsForFunctions.howMuchSpace(fs) >= length)  {
                                     return true; // файл успешно создан
                                 }
                             }

@@ -3,7 +3,7 @@ package Structure.struct;
 import java.util.ArrayList;
 
 public class Segment {
-    static public int lastBlockNumber = 1; // Последний занятый блок во всей файловой системе
+   // static public int lastBlockNumber = 1; // Последний занятый блок во всей файловой системе
     //static public final int lengthSegment = 10;
     public int firstBlockNumber; //Номер блока с которого начинаются файлы сегмента
 
@@ -39,7 +39,7 @@ public class Segment {
     }
 
     public Segment(int maxDataNum) {
-        firstBlockNumber = lastBlockNumber ;
+      //  firstBlockNumber = lastBlockNumber ;
 
         this.datas = new ArrayList<>(maxDataNum);
         currentDataNum = 0;
