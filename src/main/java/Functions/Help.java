@@ -20,10 +20,15 @@ public class Help extends BaseCommand implements iCommand {
         for (String key : registeredCommands.keySet()) {
             monitor.writeMessage("* " + key);
         }
+        monitor.writeMessage("* " + "ВЫЙТИ");
         monitor.writeMessage("Если нужно подробнее об одной из них, введите её название. Если нет - введите ВЫХОД.");
         while(true){
             readParameters();
             switch (commandName) {
+                case "ВЫЙТИ":
+                    monitor.writeMessage(commandName + " - " + "Выход из программы");
+                    monitor.writeMessage("У этой команды нет аргументов.");
+                    break;
                 case "ИЗМЕНИТЬ РАЗМЕР":
                     monitor.writeMessage(commandName + " - " + "Изменение длины существующего файла. Поиск по имени.");
                     monitor.writeMessage("В качестве аргументов команда принимает Имя файла в виде строки и Новую длину файла в виде целочисленного значения.");

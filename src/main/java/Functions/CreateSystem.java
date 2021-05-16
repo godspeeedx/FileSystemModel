@@ -19,8 +19,7 @@ public class CreateSystem extends BaseCommand implements iCommand {
     @Override
     public void execute(FileSystem fs) {
         readParameters();
-        FileSystem buf = new FileSystem(systemName, systemSize, maxSegmentNum, maxDataNum);
-        fs.copy(buf);
+        fs.copy(new FileSystem(systemName, systemSize, maxSegmentNum, maxDataNum)); //
         monitor.writeMessage("Готово!");
         monitor.writeMessage(MethodsForFunctions.saveSystem(fs));
     }
