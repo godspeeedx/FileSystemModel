@@ -19,32 +19,35 @@ public class DownloadSystem extends BaseCommand implements iCommand {
         super(im, fileSystem);
     }
 
-    @Override
-    public void execute(FileSystem fs) {
-        readParameters();
-
+    public static boolean downloadSystemStatic(String name, FileSystem fs){
         GsonBuilder gsonBuilder = new GsonBuilder();
-
         gsonBuilder.excludeFieldsWithModifiers(Modifier.TRANSIENT);
-
         Gson gson = gsonBuilder.create();
-
         try {
-            String json = downloadSystem(this.systemName);
+            String json = downloadSystem(name);
             FileSystem buf = gson.fromJson(json, FileSystem.class);
             fs.copy(buf);
         } catch (IOException ex) {
-            System.out.println(ex);
+            System.out.println("Не удалось загрузить систему, введите повторное имя системы" );
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void execute(FileSystem fs) {
+        boolean flag = false;
+        while (!flag) {
+            readParameters();
+           flag = downloadSystemStatic(this.systemName, fs);
         }
 
         monitor.writeMessage("Система загружена!");
 
     }
 
-    public String downloadSystem(String systemName) throws IOException {
-
+    public static String downloadSystem(String systemName) throws IOException {
         return Files.readString(Paths.get(systemName));
-
     }
 
     @Override

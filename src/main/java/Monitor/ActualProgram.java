@@ -16,7 +16,7 @@ public class ActualProgram {
         System.out.println("Загружаем систему или создаем новую?");
         System.out.println("(Введите СОЗДАТЬ СИСТЕМУ или ЗАГРУЗИТЬ СИСТЕМУ)");
 
-        String choice = sc.nextLine();
+        String choice = sc.nextLine().trim();
         var commandObject = monitor.runStart(choice);
         commandObject.execute(monitor.fs);
     }
@@ -30,7 +30,7 @@ public class ActualProgram {
         System.out.println("(Если не помните команду, вводите ПОМОГИТЕ)");
         while (true) {
             System.out.print("$");
-            String command = sc.nextLine();
+            String command = sc.nextLine().trim();
 
             if (command.equals("ВЫЙТИ")) {
                 break;

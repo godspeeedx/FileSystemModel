@@ -1,0 +1,1 @@
+{"systemName":"testic","systemSize":10,"maxSegmentNum":2,"segments":[{"firstBlockNumber":0,"dataRecords":[{"type":true,"name":"first","size":1},{"type":true,"name":"second","size":2}],"currentDataNum":2},{"firstBlockNumber":0,"dataRecords":[{"type":true,"name":"third","size":3}],"currentDataNum":1}],"maxDataNum":2}

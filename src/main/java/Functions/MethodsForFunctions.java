@@ -125,7 +125,7 @@ public class MethodsForFunctions {
 
         String json = gson.toJson(fs);
 
-        //System.out.println(json);
+        System.out.println(json);
 
         try {
             FileWriter writer = new FileWriter(fs.systemName + ".txt");
