@@ -11,9 +11,16 @@ public class GetSysInfo extends BaseCommand implements iCommand {
     public static String getInfo(FileSystem fs){
         int space = MethodsForFunctions.howMuchSpace(fs);
         int maxLength = MethodsForFunctions.maxLengthToInsert(fs);
+        String check;
+        if (MethodsForFunctions.checkDef(fs)){
+            check = "Дефрагментация рекомендуется";
+        }else {
+            check = "Дефрагментация не рекомендуется";
+        }
         return "Осталось вот столько памяти " + space +
                 "\nМаксимальный кусок,который можно вставить " + maxLength +
-                "\nСтепень фрагментации " + MethodsForFunctions.defragExt(fs);
+                "\nСтепень фрагментации " + MethodsForFunctions.defragExt(fs)+
+        "\n" + check;
     }
 
     @Override
