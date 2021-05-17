@@ -56,8 +56,6 @@ public class Defragmentation extends BaseCommand implements iCommand {
                 checkFirstStep = this.firstStepOfSwapping(fs);
                 //очищаем сегменты от ненужных дырок
                 this.clearGarbageFromSegments(fs);
-                //ищем подходящие файлы для второго шага
-                //this.pinsSearch(fs);
                 //второй шаг-затыкаем несколькими файлами одну дырку
                 checkSecondStep = this.secondStepOfSwapping(fs);
                 this.clearGarbageFromSegments(fs);
@@ -250,20 +248,24 @@ public class Defragmentation extends BaseCommand implements iCommand {
         public void squeezeFS(FileSystem fs){
             int maxDataNum = fs.maxDataNum;
             int currentSegmentIndex=0;
+            flag:
             for(Segment segment : fs.segments){
                 while(segment.currentDataNum<maxDataNum){
                     int lastSegmentIndex=fs.segments.size()-1;
+                    while(fs.segments.get(lastSegmentIndex).currentDataNum==0){
+                        lastSegmentIndex--;
+                        if(lastSegmentIndex<0){
+                            break flag;
+                        }
+                    }
                     if(currentSegmentIndex==lastSegmentIndex)
-                        break;
+                        break flag;
                     int lastDataIndex = fs.segments.get(lastSegmentIndex).dataRecords.size()-1;
                     DataRecord dataRecordToReplace = fs.segments.get(lastSegmentIndex).dataRecords.get(lastDataIndex);
                     segment.dataRecords.add(dataRecordToReplace);
                     segment.currentDataNum++;
                     fs.segments.get(lastSegmentIndex).dataRecords.remove(lastDataIndex);
                     fs.segments.get(lastSegmentIndex).currentDataNum--;
-                    if(fs.segments.get(lastSegmentIndex).currentDataNum==0){
-                        fs.segments.remove(lastSegmentIndex);
-                    }
                 }
                 currentSegmentIndex++;
             }
