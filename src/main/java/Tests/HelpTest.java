@@ -1,26 +1,39 @@
 package Tests;
 
-import Functions.Help;
+import Functions.*;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
-
-import static Monitor.RegistredCommands.registeredCommands;
 
 public class HelpTest {
 
-    /**
-     * Загоняем каждую команду и проверяем, что выводится чё надо.
-     */
+    //Создание списка задействанных команд. Временный, потому что почему-то не работает импорт из Monitor.RegistredCommands
+    public static Map<String, String> registeredCommands = new HashMap<>();
+    public static void init() {
+        registeredCommands.put("ИЗМЕНИТЬ РАЗМЕР", ChangeFileSize.class.getName());
+        registeredCommands.put("СОЗДАТЬ ФАЙЛ", CreateFile.class.getName());
+        registeredCommands.put("СОЗДАТЬ СИСТЕМУ", CreateSystem.class.getName());
+        registeredCommands.put("ДЕФРАГМЕНТАЦИЯ", Defragmentation.class.getName());
+        registeredCommands.put("УДАЛИТЬ ФАЙЛ", DeleteFile.class.getName());
+        registeredCommands.put("ЗАГРУЗИТЬ СИСТЕМУ", DownloadSystem.class.getName());
+        registeredCommands.put("НАПЕЧАТАТЬ", Print.class.getName());
+        registeredCommands.put("НАПЕЧАТАТЬ В АЛФАВИТНОМ ПОРЯДКЕ", PrintInAlphabetOrder.class.getName());
+        registeredCommands.put("ПОМОГИТЕ", Help.class.getName());
+        registeredCommands.put("ИНФОРМАЦИЯ", GetSysInfo.class.getName());
+    }
+
+
     @Test
     public void checkList() {
         System.out.println("Тестирование вывода правильной подсказки из списка: " + "\n");
-
-        for (String key : registeredCommands.keySet()) {
-            String  commandName = key,
-                    actual = Help.stringHelpPerCommand(commandName),
+        init(); //инициализация списка задействанных команд
+        for (String key : registeredCommands.keySet()) { //для каждой команды в списке
+            String  commandName = key, //достаём её имя
+                    actual = Help.stringHelpPerCommand(commandName), //запускаем нашу функцию по имени команды, должны в ответ получить то, что выведется на экран
                     expected = switch (commandName) {
                         case "ВЫЙТИ" -> commandName + " - " + "Выход из программы" + "\n" +
                                 "У этой команды нет аргументов.";
@@ -46,16 +59,17 @@ public class HelpTest {
                         case "ИНФОРМАЦИЯ" -> commandName + " - " + "Вывод информации о системе: сколько осталось места, степень фрагментации и другая" + "\n" +
                                 "У этой команды нет аргументов.";
                         default -> "null";
-                    };
-            System.out.println(commandName);
-            Assert.assertEquals(expected, actual);
+                    }; //в свитче ищем что для этой функции реально должно было вывестись на экран (код скопирован из Help.java)
+            System.out.println(commandName); //поприколу выводим функцию
+            Assert.assertEquals(expected, actual); //сравниваем что выдало, что ожидали
         }
     }
 
+    //генерация случайной строки в 20 букв
     public String generatingRandomString() {
-        byte[] array = new byte[20]; // length is bounded by 20
-        new Random().nextBytes(array);
-        return new String(array, Charset.forName("UTF-8"));
+        byte[] array = new byte[20]; // масив в 20букв
+        new Random().nextBytes(array); //в каждый кладём случайное число
+        return new String(array, Charset.forName("UTF-8")); //преобразуем число в букву по utf-8
     }
 
     /**
@@ -64,11 +78,11 @@ public class HelpTest {
     @Test
     public void checkRandom() {
         System.out.println("Тестирование вывода подсказки по несуществующей команде: " + "\n");
-            String  commandName = generatingRandomString(),
-                    actual = Help.stringHelpPerCommand(commandName),
-                    expected = "Кажется по введённой вами команде ещё нет справки. Или вы ошиблись вводом. Попробуем ещё раз?";
-            System.out.println(commandName);
-            Assert.assertEquals(expected, actual);
+        String  commandName = generatingRandomString(), //в качестве команды задаём случайную строку
+                actual = Help.stringHelpPerCommand(commandName), //запихиваем её в Хелп. Должны получить отсутсвие справки
+                expected = "Кажется по введённой вами команде ещё нет справки. Или вы ошиблись вводом. Попробуем ещё раз?"; //чё должны получить
+        System.out.println(commandName); //выводим по приколу
+        Assert.assertEquals(expected, actual); //сравниваем
     }
     /**
      * Загоняем ВЫХОД. Должны получить нул (выход).
@@ -77,9 +91,8 @@ public class HelpTest {
     public void checkExit() {
         System.out.println("Тестирование вывода подсказки по несуществующей команде: " + "\n");
         String  commandName = "ВЫХОД",
-                actual = Help.stringHelpPerCommand(commandName),
-                expected = null;
+                actual = Help.stringHelpPerCommand(commandName); //загоняем ВЫХОД в Хелп.
         System.out.println(commandName);
-        Assert.assertEquals(expected, actual);
+        Assert.assertNull(actual); //сравниваем, должны получить нуль
     }
 }

@@ -1,10 +1,9 @@
 package Tests;
 
-import Functions.Help;
 import Monitor.MonitorClass;
-import Structure.struct.FileSystem;
 import org.junit.Assert;
 import org.junit.Test;
+import Structure.struct.FileSystem;
 
 import java.util.Random;
 
@@ -16,18 +15,12 @@ public class MonitorClassTest {
      */
     @Test
     public void checkReadFileSizeLogic() {
-        int     command = new Random().nextInt();
-        boolean actual = monitor.readFileSizeLogic(command),
-                expected;
+        int     command = new Random().nextInt(); //создаём случайное число
+        boolean actual = monitor.readFileSizeLogic(command), //загоняем его в функцию приёма размера файла
+                expected=command < 0 || command > FileSystem.systemSize; //показываем, что если функции не нравится ввод она отдаёт Тру на переввод.
+        Assert.assertEquals(expected, actual); //сравниваем
 
-        if (command < 0 || command > FileSystem.systemSize)
-            expected=true;
-        else
-            expected=false;
-
-        Assert.assertEquals(expected, actual);
-
-    }
+    }//тут я хрен знает чё писать
     @Test
     public void checkRunFunction(){
 
