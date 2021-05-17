@@ -4,7 +4,6 @@ import Functions.CreateFile;
 import Functions.Defragmentation;
 import Functions.DeleteFile;
 import Functions.MethodsForFunctions;
-import Structure.struct.DataRecord;
 import Structure.struct.FileSystem;
 import Structure.struct.Segment;
 import org.junit.Assert;
@@ -17,7 +16,6 @@ public class DefragmentationTest {
     @Test
     public void OneFileReplacedWithOneFile() {
         FileSystem actual = new FileSystem("Test1", 25, 3, 2);
-        ArrayList<Segment> expected = new ArrayList<>();
         System.out.println("Тестирование дефрагментации: " + "\n");
 
 
@@ -31,21 +29,7 @@ public class DefragmentationTest {
         CreateFile.createFile(actual, "5", 2);
         CreateFile.createFile(actual, "6", 3);
 
-        /* заполняем сегменты как они будут после дефрагментации */
-        expected.add(new Segment(2));
-        expected.add(new Segment(2));
-        expected.add(new Segment(1));
 
-        expected.get(0).dataRecords.add(new DataRecord("1", 5));
-        expected.get(0).dataRecords.add(new DataRecord("4", 6));
-        expected.get(1).dataRecords.add(new DataRecord("3", 1));
-        expected.get(1).dataRecords.add(new DataRecord("5", 2));
-        expected.get(2).dataRecords.add(new DataRecord("6", 3));
-
-
-        expected.get(0).currentDataNum = 2;
-        expected.get(1).currentDataNum = 2;
-        expected.get(2).currentDataNum = 1;
         /*
         зона выполнения кода
          */
@@ -59,6 +43,7 @@ public class DefragmentationTest {
         double b = MethodsForFunctions.defragExt(actual);
         // проверка
         Assert.assertNotEquals(a,b);
+        Assert.assertEquals(0.0,b,0.0001);
         System.out.println("Before " + a+", "+ b);
 
     }
@@ -90,6 +75,7 @@ public class DefragmentationTest {
         // проверка
 
         Assert.assertNotEquals(a,b);
+        Assert.assertEquals(0.0,b,0.0001);
         System.out.println("Before " + a+", "+ b);
     }
 
@@ -122,6 +108,7 @@ public class DefragmentationTest {
         // проверка
        // Assert.assertEquals(expected, actual.segments);
         Assert.assertNotEquals(a,b);
+        Assert.assertEquals(0.0,b,0.0001);
         System.out.println("Before " + a+", "+ b);
 
     }
@@ -156,6 +143,7 @@ public class DefragmentationTest {
         // проверка
 
         Assert.assertNotEquals(a,b);
+        Assert.assertEquals(0.0,b,0.0001);
 
     }
 
@@ -189,6 +177,7 @@ public class DefragmentationTest {
         // проверка
 
         Assert.assertNotEquals(a,b);
+        Assert.assertEquals(0.0,b,0.0001);
 
     }
 
@@ -222,6 +211,7 @@ public class DefragmentationTest {
         // проверка
 
         Assert.assertNotEquals(a,b);
+        Assert.assertEquals(0.0,b,0.0001);
 
     }
 
@@ -256,7 +246,7 @@ public class DefragmentationTest {
         // проверка
 
         Assert.assertNotEquals(a,b);
-
+        Assert.assertEquals(0.0,b,0.0001);
     }
 
     @Test
@@ -291,7 +281,8 @@ public class DefragmentationTest {
         System.out.println("Before " + a+", After "+ b);
         // проверка
 
-        //Assert.assertEquals(a,b);
+        Assert.assertEquals(0.0,b,0.0001);
+        Assert.assertEquals(a,b,0.1);
 
     }
 }

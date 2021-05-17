@@ -148,6 +148,7 @@ public class MethodsForFunctions {
     }
 
     public static double averageLengthToInsert(FileSystem fs) {
+        if (maxLengthToInsert(fs) == howMuchSpace(fs)) return maxLengthToInsert(fs);
         int sum = 0;
         int n = 0;
         for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
@@ -158,7 +159,6 @@ public class MethodsForFunctions {
                 }
             }
         }
-        if (maxLengthToInsert(fs) == howMuchSpace(fs)) return maxLengthToInsert(fs);
         return n != 0 ? (double) sum / n : 0;
     }
 
@@ -175,7 +175,7 @@ public class MethodsForFunctions {
         try {
             a = 1 - (((maxLength / space) + averageLength / maxLength) / 2);
         } catch (ArithmeticException ae) {
-            System.out.println("ArithmeticException occured!");
+            System.out.println("ArithmeticException occurred!");
             a = 0;
         }
         BigDecimal bd = new BigDecimal(Double.toString(a));

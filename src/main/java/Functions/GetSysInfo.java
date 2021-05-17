@@ -13,9 +13,9 @@ public class GetSysInfo extends BaseCommand implements iCommand {
         int maxLength = MethodsForFunctions.maxLengthToInsert(fs);
         String check;
         if (MethodsForFunctions.checkDef(fs)){
-            check = "Дефрагментация рекомендуется";
+            check = "Дефрагментация необходима";
         }else {
-            check = "Дефрагментация не рекомендуется";
+            check = "Дефрагментация не необходима";
         }
         return "Осталось вот столько памяти " + space +
                 "\nМаксимальный кусок,который можно вставить " + maxLength +
