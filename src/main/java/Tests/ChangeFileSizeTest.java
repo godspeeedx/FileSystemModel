@@ -124,6 +124,8 @@ public class ChangeFileSizeTest {
         expected.get(0).currentDataNum = 2;
         expected.get(1).currentDataNum = 1;
         expected.get(1).dataRecords.add(new DataRecord("third", 3));
+        System.out.println("- Неуспешная попытка изменения размера файла, при условии" +
+                " что новый размер больше предыдущего и свободной памяти нет");
         ChangeFileSize.changeFileSize(actual, "first", 23);
         Assert.assertEquals(expected, actual.segments);
     }
@@ -148,6 +150,8 @@ public class ChangeFileSizeTest {
         expected.get(1).currentDataNum = 2;
         expected.get(1).dataRecords.add(new DataRecord("third", 3));
         expected.get(1).dataRecords.add(new DataRecord("forth",4));
+        System.out.println("- Неуспешная попытка изменения размера файла, при условии" +
+                " что свободная память есть, но позиции для этого файла нет");
         ChangeFileSize.changeFileSize(actual, "first", 10);
         Assert.assertEquals(expected, actual.segments);
     }
@@ -170,6 +174,7 @@ public class ChangeFileSizeTest {
         expected.get(0).currentDataNum = 2;
         expected.get(1).currentDataNum = 1;
         expected.get(1).dataRecords.add(new DataRecord("third", 3));
+        System.out.println("- Неуспешная попытка изменения размера файла, которого не сущетсвует");
         ChangeFileSize.changeFileSize(actual, "dsffsd", 4);
         Assert.assertEquals(expected, actual.segments);
     }
