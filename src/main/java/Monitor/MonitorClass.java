@@ -15,18 +15,20 @@ public class MonitorClass implements iMonitor {
     }
 
     public iCommand runStart(String commandName) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        if (commandName.equals("СОЗДАТЬ СИСТЕМУ") || commandName.equals("ЗАГРУЗИТЬ СИСТЕМУ")) {
-            var commandClassName = registeredCommands.get(commandName);
-            var constr = Class.forName(commandClassName).getConstructor(iMonitor.class, FileSystem.class);
-            return (iCommand) constr.newInstance(this, fs);
-        }
+        if (commandName.equals("СОЗДАТЬ СИСТЕМУ") || commandName.equals("ЗАГРУЗИТЬ СИСТЕМУ"))
+            return runFunction(commandName);
         return null;
     }
 
     public iCommand runFunction(String commandName) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        var commandClassName = registeredCommands.get(commandName);
-        var constr = Class.forName(commandClassName).getConstructor(iMonitor.class, FileSystem.class);
-        return (iCommand) constr.newInstance(this, fs);
+        String command = registeredCommands.get(commandName);
+        if (command==null){
+            writeMessage("Команда не найдена, попробуйте ещё раз или введите ПОМОГИТЕ");
+            return null;
+        }
+        return (iCommand) Class.forName(command)
+                                .getConstructor(iMonitor.class, FileSystem.class)
+                                .newInstance(this, fs);
     }
 
     @Override
@@ -42,7 +44,6 @@ public class MonitorClass implements iMonitor {
         str = sc.nextLine();
         return str;
     }
-
 
     public boolean readFileSizeLogic(int fileLength) {
             if (fileLength < 0 || fileLength > FileSystem.systemSize) {
@@ -65,7 +66,6 @@ public class MonitorClass implements iMonitor {
         } while (readFileSizeLogic(fileLength));
         return fileLength;
     }
-
 
     private int readInt(String userMessage){
         Scanner sc = new Scanner(System.in);

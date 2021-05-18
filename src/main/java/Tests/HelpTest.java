@@ -1,6 +1,7 @@
 package Tests;
 
 import Functions.*;
+import Monitor.RegistredCommands;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,28 +11,11 @@ import java.util.Map;
 import java.util.Random;
 
 public class HelpTest {
-
-    //Создание списка задействанных команд. Временный, потому что почему-то не работает импорт из Monitor.RegistredCommands
-    public static Map<String, String> registeredCommands = new HashMap<>();
-    public static void init() {
-        registeredCommands.put("ИЗМЕНИТЬ РАЗМЕР", ChangeFileSize.class.getName());
-        registeredCommands.put("СОЗДАТЬ ФАЙЛ", CreateFile.class.getName());
-        registeredCommands.put("СОЗДАТЬ СИСТЕМУ", CreateSystem.class.getName());
-        registeredCommands.put("ДЕФРАГМЕНТАЦИЯ", Defragmentation.class.getName());
-        registeredCommands.put("УДАЛИТЬ ФАЙЛ", DeleteFile.class.getName());
-        registeredCommands.put("ЗАГРУЗИТЬ СИСТЕМУ", DownloadSystem.class.getName());
-        registeredCommands.put("НАПЕЧАТАТЬ", Print.class.getName());
-        registeredCommands.put("НАПЕЧАТАТЬ В АЛФАВИТНОМ ПОРЯДКЕ", PrintInAlphabetOrder.class.getName());
-        registeredCommands.put("ПОМОГИТЕ", Help.class.getName());
-        registeredCommands.put("ИНФОРМАЦИЯ", GetSysInfo.class.getName());
-    }
-
-
     @Test
     public void checkList() {
         System.out.println("Тестирование вывода правильной подсказки из списка: " + "\n");
-        init(); //инициализация списка задействанных команд
-        for (String key : registeredCommands.keySet()) { //для каждой команды в списке
+        RegistredCommands.init(); //инициализация списка задействанных команд
+        for (String key : RegistredCommands.registeredCommands.keySet()) { //для каждой команды в списке
             String  commandName = key, //достаём её имя
                     actual = Help.stringHelpPerCommand(commandName), //запускаем нашу функцию по имени команды, должны в ответ получить то, что выведется на экран
                     expected = switch (commandName) {
