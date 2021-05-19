@@ -39,7 +39,7 @@ public class ActualProgram {
         System.out.println("(Если не помните команду, вводите ПОМОГИТЕ)");
         while (true) {
             System.out.print("$");
-            String command = sc.nextLine().trim();
+            String command = sc.nextLine().trim() ;
 
             if (command.equals("ВЫЙТИ"))
                 break;
