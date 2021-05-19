@@ -14,18 +14,20 @@ public class Help extends BaseCommand implements iCommand {
         super(im, fileSystem);
     }
 
-    public void allCommandsHelpShowing() {
-        monitor.writeMessage("В системе предусмотрен целый ряд команд:");
+    public static String stringAllCommandsHelp(){
+        String returnStr="";
         for (String key : registeredCommands.keySet()) {
-            monitor.writeMessage("* " + key);
+            returnStr+="* " + key + "\n";
         }
-        monitor.writeMessage("* " + "ВЫЙТИ");
+        return returnStr;
+    }
+    public void showStringAllCommandsHelp(){
+        monitor.writeMessage("В системе предусмотрен целый ряд команд:");
+        monitor.writeMessage(stringAllCommandsHelp());
     }
 
     public static String stringHelpPerCommand(String commandName) {
         return switch (commandName) {
-            case "ВЫЙТИ" -> commandName + " - " + "Выход из программы" + "\n" +
-                    "У этой команды нет аргументов.";
             case "ИЗМЕНИТЬ РАЗМЕР" -> commandName + " - " + "Изменение длины существующего файла. Поиск по имени." + "\n" +
                     "В качестве аргументов команда принимает Имя файла в виде строки и Новую длину файла в виде целочисленного значения.";
             case "СОЗДАТЬ ФАЙЛ" -> commandName + " - " + "Создание нового файла с заданием его имени и длины." + "\n" +
@@ -51,7 +53,6 @@ public class Help extends BaseCommand implements iCommand {
             default -> "Кажется по введённой вами команде ещё нет справки. Или вы ошиблись вводом. Попробуем ещё раз?";
         };
     }
-
     public boolean showStringHelpPerCommand(String stringHelpPerCommand){
         if (stringHelpPerCommand == null)
             return false;
@@ -63,7 +64,7 @@ public class Help extends BaseCommand implements iCommand {
 
     @Override
     public void execute(FileSystem fs) {
-        allCommandsHelpShowing();
+        showStringAllCommandsHelp();
 
         monitor.writeMessage("Если нужно подробнее об одной из них, введите её название. Если нет - введите ВЫХОД.");
 

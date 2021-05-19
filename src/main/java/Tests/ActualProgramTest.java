@@ -14,6 +14,9 @@ public class ActualProgramTest {
     static FileSystem fs = new FileSystem("", 0, 0, 0);
     static MonitorClass monitor = new MonitorClass(fs);
 
+    /**
+     * Не работает, потому что Junit не умеет обрабатывать ввод пользователя
+     */
     @Test
     public void checkInitialization1() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         String command="СОЗДАТЬ СИСТЕМУ";

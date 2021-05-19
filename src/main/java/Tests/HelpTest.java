@@ -10,7 +10,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import static Monitor.RegistredCommands.registeredCommands;
+
 public class HelpTest {
+    /**
+     * Проверяем вывод правильной последовательности команд
+     */
+    @Test
+    public void checkAll() {
+        System.out.println("Тестирование вывода списка команд: " + "\n");
+        RegistredCommands.init(); //инициализация списка задействанных команд
+        String  actual = Help.stringAllCommandsHelp(),
+                expected = "";
+        for (String key : registeredCommands.keySet()) {
+            expected+="* " + key + "\n";
+        }
+        Assert.assertEquals(expected, actual); //сравниваем что выдало, что ожидали
+    }
+
+    /**
+     * Проверяем вывод нужной справки по нужной строке
+     */
     @Test
     public void checkList() {
         System.out.println("Тестирование вывода правильной подсказки из списка: " + "\n");
@@ -44,30 +64,22 @@ public class HelpTest {
                                 "У этой команды нет аргументов.";
                         default -> "null";
                     }; //в свитче ищем что для этой функции реально должно было вывестись на экран (код скопирован из Help.java)
-            System.out.println(commandName); //поприколу выводим функцию
             Assert.assertEquals(expected, actual); //сравниваем что выдало, что ожидали
         }
     }
 
-    //генерация случайной строки в 20 букв
-    public String generatingRandomString() {
-        byte[] array = new byte[20]; // масив в 20букв
-        new Random().nextBytes(array); //в каждый кладём случайное число
-        return new String(array, Charset.forName("UTF-8")); //преобразуем число в букву по utf-8
-    }
-
     /**
-     * Генерируем случайную строку и загоняем её. Должны получить отсутствие справки
+     * Загоняем случайную строку. Должны получить отсутствие справки
      */
     @Test
     public void checkRandom() {
         System.out.println("Тестирование вывода подсказки по несуществующей команде: " + "\n");
-        String  commandName = generatingRandomString(), //в качестве команды задаём случайную строку
+        String  commandName = "БЕЛЕБЕРДА", //в качестве команды задаём случайную строку
                 actual = Help.stringHelpPerCommand(commandName), //запихиваем её в Хелп. Должны получить отсутсвие справки
                 expected = "Кажется по введённой вами команде ещё нет справки. Или вы ошиблись вводом. Попробуем ещё раз?"; //чё должны получить
-        System.out.println(commandName); //выводим по приколу
         Assert.assertEquals(expected, actual); //сравниваем
     }
+
     /**
      * Загоняем ВЫХОД. Должны получить нул (выход).
      */
