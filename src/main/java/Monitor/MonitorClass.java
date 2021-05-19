@@ -10,25 +10,25 @@ import static Monitor.RegistredCommands.registeredCommands;
 public class MonitorClass implements iMonitor {
     FileSystem fs;
 
-    MonitorClass(FileSystem fs) {
+    public MonitorClass(FileSystem fs) {
         this.fs = fs;
     }
 
     public iCommand runStart(String commandName) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-
-        if (commandName.equals("СОЗДАТЬ СИСТЕМУ") || commandName.equals("ЗАГРУЗИТЬ СИСТЕМУ")) {
-            var commandClassName = registeredCommands.get(commandName);
-            var constr = Class.forName(commandClassName).getConstructor(iMonitor.class, FileSystem.class);
-            return (iCommand) constr.newInstance(this, fs);
-        }
+        if (commandName.equals("СОЗДАТЬ СИСТЕМУ") || commandName.equals("ЗАГРУЗИТЬ СИСТЕМУ"))
+            return runFunction(commandName);
         return null;
     }
 
-
     public iCommand runFunction(String commandName) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        var commandClassName = registeredCommands.get(commandName);
-        var constr = Class.forName(commandClassName).getConstructor(iMonitor.class, FileSystem.class);
-        return (iCommand) constr.newInstance(this, fs);
+        String command = registeredCommands.get(commandName);
+        if (command==null){
+            writeMessage("Команда не найдена, попробуйте ещё раз или введите ПОМОГИТЕ");
+            return null;
+        }
+        return (iCommand) Class.forName(command)
+                                .getConstructor(iMonitor.class, FileSystem.class)
+                                .newInstance(this, fs);
     }
 
     @Override
@@ -45,49 +45,54 @@ public class MonitorClass implements iMonitor {
         return str;
     }
 
+    @Deprecated
+    public boolean readFileSizeLogic(int fileLength) {
+            if (fileLength < 0 || fileLength > FileSystem.systemSize) {
+                System.out.println("Длина файла некорректна");
+                System.out.println("Введите новую длину файла");
+                return true;
+            }
+            else
+                return false;
+    }
+
     @Override
+    @Deprecated
     public int readFileSize(String userMessage) {
         Scanner in = new Scanner(System.in);
         System.out.println(userMessage);
         boolean check = true;
         int fileLength = 0;
-        while (check) {
+        do{
             fileLength = in.nextInt();
-            if (fileLength < 0 || fileLength > FileSystem.systemSize) {
-                System.out.println("Длина файла некорректна");
-                System.out.println("Введите новую длину файла");
-            } else {
-                check = false;
-            }
-        }
+        } while (readFileSizeLogic(fileLength));
         return fileLength;
     }
 
+    public int readInt(String userMessage){
+        Scanner sc = new Scanner(System.in);
+        int num;
+        System.out.println(userMessage);
+        num = sc.nextInt();
+        return num;
+    }
+
     @Override
+    @Deprecated
     public int readSystemSize(String userMessage) {
-        Scanner sc = new Scanner(System.in);
-        int num;
-        System.out.println(userMessage);
-        num = sc.nextInt();
-        return num;
+        return readInt(userMessage);
     }
 
     @Override
+    @Deprecated
     public int readMaxSegmentNum(String userMessage) {
-        Scanner sc = new Scanner(System.in);
-        int num;
-        System.out.println(userMessage);
-        num = sc.nextInt();
-        return num;
+        return readInt(userMessage);
     }
 
     @Override
+    @Deprecated
     public int readMaxDataNum(String userMessage) {
-        Scanner sc = new Scanner(System.in);
-        int num;
-        System.out.println(userMessage);
-        num = sc.nextInt();
-        return num;
+        return readInt(userMessage);
     }
 
 }

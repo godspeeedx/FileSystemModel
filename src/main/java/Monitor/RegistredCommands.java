@@ -9,7 +9,6 @@ public class RegistredCommands {
 
     public static Map<String, String> registeredCommands = new HashMap<>();
 
-
     public static void init() {
         registeredCommands.put("ИЗМЕНИТЬ РАЗМЕР", ChangeFileSize.class.getName());
         registeredCommands.put("СОЗДАТЬ ФАЙЛ", CreateFile.class.getName());
