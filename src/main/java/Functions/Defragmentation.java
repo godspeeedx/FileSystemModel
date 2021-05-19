@@ -26,14 +26,17 @@ public class Defragmentation extends BaseCommand implements iCommand {
     @Override
     public void execute(FileSystem fs) {
         if (MethodsForFunctions.defragExt(fs) != 0){
-            monitor.writeMessage("Степень фрагментации "
-                    + MethodsForFunctions.defragExt(fs)+ ".");
+            monitor.writeMessage("Степень фрагментации до дефрагментации "
+                    + MethodsForFunctions.defragExt(fs));
             defragmentation(fs);
+            monitor.writeMessage("Степень фрагментации после дефрагментации "
+                    + MethodsForFunctions.defragExt(fs));
             monitor.writeMessage(MethodsForFunctions.saveSystem(fs));
+
         }
         else{
             monitor.writeMessage("Степень фрагментации "
-                    + MethodsForFunctions.defragExt(fs)+ ". Дефрагментация не нужна.");
+                    + MethodsForFunctions.defragExt(fs)+ ". Дефрагментация не нужна");
         }
 
     }
