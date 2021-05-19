@@ -131,5 +131,4 @@ public class MonitorClassTest {
         var actual = monitor.runFunction(commandName); //запустили нашу функцию
         Assert.assertNull(actual); //проверили что null
     }
-
 }

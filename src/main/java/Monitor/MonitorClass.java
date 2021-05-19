@@ -45,6 +45,7 @@ public class MonitorClass implements iMonitor {
         return str;
     }
 
+    @Deprecated
     public boolean readFileSizeLogic(int fileLength) {
             if (fileLength < 0 || fileLength > FileSystem.systemSize) {
                 System.out.println("Длина файла некорректна");
@@ -56,6 +57,7 @@ public class MonitorClass implements iMonitor {
     }
 
     @Override
+    @Deprecated
     public int readFileSize(String userMessage) {
         Scanner in = new Scanner(System.in);
         System.out.println(userMessage);
@@ -67,7 +69,7 @@ public class MonitorClass implements iMonitor {
         return fileLength;
     }
 
-    private int readInt(String userMessage){
+    public int readInt(String userMessage){
         Scanner sc = new Scanner(System.in);
         int num;
         System.out.println(userMessage);
@@ -76,16 +78,19 @@ public class MonitorClass implements iMonitor {
     }
 
     @Override
+    @Deprecated
     public int readSystemSize(String userMessage) {
         return readInt(userMessage);
     }
 
     @Override
+    @Deprecated
     public int readMaxSegmentNum(String userMessage) {
         return readInt(userMessage);
     }
 
     @Override
+    @Deprecated
     public int readMaxDataNum(String userMessage) {
         return readInt(userMessage);
     }
