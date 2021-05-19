@@ -15,20 +15,23 @@ public class ActualProgramTest {
     static MonitorClass monitor = new MonitorClass(fs);
 
     @Test
-    void checkInitialization1() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public void checkInitialization1() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         String command="СОЗДАТЬ СИСТЕМУ";
+        RegistredCommands.init(); //инициализируем список всех команд
         var actual = ActualProgram.initialization(command);
         Assert.assertTrue(actual); //
     }
     @Test
-    void checkInitialization2() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public void checkInitialization2() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         String command="ЗАГРУЗИТЬ СИСТЕМУ";
+        RegistredCommands.init(); //инициализируем список всех команд
         var actual = ActualProgram.initialization(command);
         Assert.assertTrue(actual); //
     }
     @Test
-    void checkInitialization3() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public void checkInitialization3() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         String command="Белеберда";
+        RegistredCommands.init(); //инициализируем список всех команд
         var actual = ActualProgram.initialization(command);
         Assert.assertFalse(actual); //
     }
