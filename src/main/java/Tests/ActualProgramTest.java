@@ -31,27 +31,53 @@ public class ActualProgramTest {
 
 
     /**
-     * Не работает, потому что Junit не умеет обрабатывать ввод пользователя
-     */
-    @Test
-    public void checkInitialization1() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        String command="СОЗДАТЬ СИСТЕМУ";
-        RegistredCommands.init(); //инициализируем список всех команд
-        var actual = ActualProgram.initialization(command);
-        Assert.assertTrue(actual); //
-    }
-    @Test
-    public void checkInitialization2() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        String command="ЗАГРУЗИТЬ СИСТЕМУ";
-        RegistredCommands.init(); //инициализируем список всех команд
-        var actual = ActualProgram.initialization(command);
-        Assert.assertTrue(actual); //
-    }
-    @Test
-    public void checkInitialization3() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        String command="Белеберда";
-        RegistredCommands.init(); //инициализируем список всех команд
-        var actual = ActualProgram.initialization(command);
-        Assert.assertFalse(actual); //
-    }
-}
+* Ради всего святого поправьте тут форматирование и вообще откомпилируйте это ._.
+  */
+//Проверка ввода Белеберда и СОЗДАТЬ СИСТЕМУ
+@Test
+    public void checkMainInit1() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        ArrayList<String> expected = new ArrayList<String>();
+     expected.add("\nДоброе утро! Вас приветствует группа С18-501!" + "\n" + "Загружаем систему или создаем новую?");
+                        expected.add("(Введите СОЗДАТЬ СИСТЕМУ или ЗАГРУЗИТЬ СИСТЕМУ)");
+      expected.add("(Введите СОЗДАТЬ СИСТЕМУ или ЗАГРУЗИТЬ СИСТЕМУ)");                                  
+                                                              expected.add("Введите название системы:");
+                                                                             expected.add("Введите размер диска:");
+                                                                                                expected.add("Введите максимальное число сегментов:");
+                                                                                                                   expected.add("Введите максимальное число записей в каждом сегменте:");
+                                                                                                                                      expected.add("Готово!");
+                                                                                                                                                         expected.add("Система сохранена");
+
+stringListInput.add("БЕЛЕБЕРДА");
+stringListInput.add("СОЗДАТЬ СИСТЕМУ");
+stringListInput.add("Диск1");
+stringListInput.add("2");
+stringListInput.add("4");
+stringListInput.add("8");
+    
+
+ActualProgram.init(stream);
+Assert.assertEquals(stringListOutput.get(), expected);
+ }
+
+
+//Проверка ввод ЗАГРУЗИТЬ СИСТЕМУ
+@Test
+    public void checkMainInit1() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    
+MethodsForFunctions.saveSystem(new FileSystem("Диск1", 2, 4, 8);
+
+ArrayList<String> expected = new ArrayList<String>();
+     expected.add("\nДоброе утро! Вас приветствует группа С18-501!" + "\n" + "Загружаем систему или создаем новую?");
+                        expected.add("(Введите СОЗДАТЬ СИСТЕМУ или ЗАГРУЗИТЬ СИСТЕМУ)");
+      expected.add("Введите название системы для загрузки:");                    
+expected.add("Не удалось загрузить систему, введите повторное имя системы" );
+                                                                                                                                                         expected.add("Система сохранена");
+
+stringListInput.add("ЗАГРУЗИТЬ СИСТЕМУ");
+stringListInput.add("ДИСКЕТА101");
+stringListInput.add("Диск1");
+
+
+ActualProgram.init(stream);
+Assert.assertEquals(stringListOutput.get(), expected);
+ }
