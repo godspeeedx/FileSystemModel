@@ -55,40 +55,23 @@ public class MonitorClass implements iMonitor {
                 return false;
     }
 
-    @Override
-    public int readFileSize(String userMessage) {
-        Scanner in = new Scanner(System.in);
-        System.out.println(userMessage);
-        boolean check = true;
-        int fileLength = 0;
-        do{
-            fileLength = in.nextInt();
-        } while (readFileSizeLogic(fileLength));
-        return fileLength;
-    }
 
     @Override
     public int readInt(String userMessage){
-        Scanner sc = new Scanner(System.in);
-        int num;
         System.out.println(userMessage);
-        num = sc.nextInt();
-        return num;
+        Scanner sc = new Scanner(System.in);
+        int number = 1;
+        do {
+            if(number <= 0)
+            System.out.println("Некорректные данные! Повторите попытку");
+            while (!sc.hasNextInt()) {
+                System.out.println("Некорректные данные! Повторите попытку");
+                sc.next(); // this is important!
+            }
+            number = sc.nextInt();
+        } while (number <= 0);
+        return number;
     }
 
-    @Override
-    public int readSystemSize(String userMessage) {
-        return readInt(userMessage);
-    }
-
-    @Override
-    public int readMaxSegmentNum(String userMessage) {
-        return readInt(userMessage);
-    }
-
-    @Override
-    public int readMaxDataNum(String userMessage) {
-        return readInt(userMessage);
-    }
 
 }
