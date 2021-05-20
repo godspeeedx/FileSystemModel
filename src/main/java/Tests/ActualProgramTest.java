@@ -17,12 +17,9 @@ public class ActualProgramTest {
     static FileSystem fs = new FileSystem("", 0, 0, 0);
     static MonitorClass monitor = new MonitorClass(fs);
 
-
-    /**
-     * Ради всего святого поправьте тут форматирование и вообще откомпилируйте это ._.
-     */
     @Test
     public void checkMainRealization1() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        RegistredCommands.init();
         StreamActionsFake stream = new StreamActionsFake();
 
         ArrayList<String> expected = new ArrayList<String>();
@@ -39,10 +36,10 @@ public class ActualProgramTest {
 
 
     }
-
     //Проверка ввода Белеберда и СОЗДАТЬ СИСТЕМУ
     @Test
     public void checkMainInit1() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        RegistredCommands.init();
         StreamActionsFake stream = new StreamActionsFake();
         ArrayList<String> expected = new ArrayList<String>();
         expected.add("\nДоброе утро! Вас приветствует группа С18-501!" + "\n" + "Загружаем систему или создаем новую?");
@@ -62,14 +59,15 @@ public class ActualProgramTest {
         stream.stringListInput.add("8");
 
 
-       // ActualProgram.init(stream);
-        Assert.assertEquals(stream.stringListOutput , expected);
+        ActualProgram.init(stream);
+        Assert.assertEquals(expected, stream.stringListOutput);
     }
 
 
     //Проверка ввод ЗАГРУЗИТЬ СИСТЕМУ
     @Test
     public void checkMainInit2() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        RegistredCommands.init();
         StreamActionsFake stream = new StreamActionsFake();
         MethodsForFunctions.saveSystem(new FileSystem("Диск1", 2, 4, 8));
 
@@ -86,6 +84,6 @@ public class ActualProgramTest {
 
 
         ActualProgram.init(stream);
-        Assert.assertEquals(stream.stringListOutput, expected);
+        Assert.assertEquals(expected, stream.stringListOutput);
     }
 }
