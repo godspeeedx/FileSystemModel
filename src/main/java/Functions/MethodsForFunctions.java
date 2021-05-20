@@ -175,7 +175,7 @@ public class MethodsForFunctions {
         try {
             a = 1 - (((maxLength / space) + averageLength / maxLength) / 2);
         } catch (ArithmeticException ae) {
-            System.out.println("ArithmeticException occurred!");
+            System.out.println("ArithmeticException occurred!");  //неправильный вывод
             a = 0;
         }
         BigDecimal bd = new BigDecimal(Double.toString(a));

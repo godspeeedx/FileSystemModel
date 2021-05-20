@@ -16,6 +16,10 @@ public class StreamActions implements iStreamActions {
         Scanner sc = new Scanner(System.in);
         return sc.nextLine().trim();
     }
+    public int nextInt(){
+        Scanner sc = new Scanner(System.in);
+        return sc.nextInt();
+    }
 
 }
 

@@ -12,8 +12,7 @@ import java.util.Random;
 import static Monitor.RegistredCommands.registeredCommands;
 
 public class MonitorClassTest {
-    static FileSystem fs = new FileSystem("", 0, 0, 0);
-    static MonitorClass monitor = new MonitorClass(fs);
+    static MonitorClass monitor = new MonitorClass(new FileSystem("", 0, 0, 0), new StreamActionsFake());
 
     /**
      * Проверяем правильно ли логика работает

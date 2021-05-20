@@ -3,7 +3,6 @@ package Tests;
 import Structure.struct.iStreamActions;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class StreamActionsFake implements iStreamActions {
 
@@ -15,21 +14,21 @@ public class StreamActionsFake implements iStreamActions {
         stringListOutput.add("");
 
     }
-        
-
     public void print(String value) {
         if (stringListOutput.isEmpty()) stringListOutput.add("");
 
-        stringListOutput.add(stringListOutput.remove(stringListOutput.size()-1)+value);
+        stringListOutput.add(stringListOutput.remove(stringListOutput.size() - 1) + value);
 
-       
+
     }
-
     public String getLine() {
         if (stringListInput.isEmpty())
             return "ВЫЙТИ";
         return stringListInput.remove(0);
     }
-
-
+    public int nextInt() {
+        if (stringListInput.isEmpty())
+            return 0;
+        return Integer.parseInt(stringListInput.remove(0));
+    }
 }
