@@ -28,7 +28,7 @@ public class StreamActionsFake implements iStreamActions {
     public String getLine() {
         if (stringListInput.isEmpty())
             return "ВЫЙТИ";
-        return stringListInput.remove(stringListInput.size() - 1);
+        return stringListInput.remove(0);
     }
 
 
