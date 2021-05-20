@@ -15,28 +15,34 @@ public class ActualProgramTest {
     static FileSystem fs = new FileSystem("", 0, 0, 0);
     static MonitorClass monitor = new MonitorClass(fs);
 
-    @Test
-    public void checkMainRealization1() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        StreamActionsFake stream = new StreamActionsFake();
-        ActualProgram.mainRealization(stream);
-        //Assert.assertEquals(stringListOutput.get);
-    }
 
-
-
-
-
-
-
-
-
-    /**
+/**
 * Ради всего святого поправьте тут форматирование и вообще откомпилируйте это ._.
   */
+@Test
+public void checkMainRealization1() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        StreamActionsFake stream = new StreamActionsFake();
+
+ArrayList<String> expected = new ArrayList<String>();
+expected.add("(Если не помните команду, вводите ПОМОГИТЕ)");
+expected.add("$");
+expected.add("(Если не помните команду, вводите ПОМОГИТЕ)");
+
+stringListInput.add("БЕЛЕБЕРДА");
+stringListInput.add("ВЫЙТИ");
+
+
+  ActualProgram.mainRealization(stream);
+                        //Assert.assertEquals(stringListOutput.get);
+
+
+                            }
+
 //Проверка ввода Белеберда и СОЗДАТЬ СИСТЕМУ
 @Test
     public void checkMainInit1() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        ArrayList<String> expected = new ArrayList<String>();
+        StreamActionsFake stream = new StreamActionsFake();
+ArrayList<String> expected = new ArrayList<String>();
      expected.add("\nДоброе утро! Вас приветствует группа С18-501!" + "\n" + "Загружаем систему или создаем новую?");
                         expected.add("(Введите СОЗДАТЬ СИСТЕМУ или ЗАГРУЗИТЬ СИСТЕМУ)");
       expected.add("(Введите СОЗДАТЬ СИСТЕМУ или ЗАГРУЗИТЬ СИСТЕМУ)");                                  
@@ -46,7 +52,6 @@ public class ActualProgramTest {
                                                                                                                    expected.add("Введите максимальное число записей в каждом сегменте:");
                                                                                                                                       expected.add("Готово!");
                                                                                                                                                          expected.add("Система сохранена");
-
 stringListInput.add("БЕЛЕБЕРДА");
 stringListInput.add("СОЗДАТЬ СИСТЕМУ");
 stringListInput.add("Диск1");
@@ -63,7 +68,7 @@ Assert.assertEquals(stringListOutput.get(), expected);
 //Проверка ввод ЗАГРУЗИТЬ СИСТЕМУ
 @Test
     public void checkMainInit1() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-    
+    StreamActionsFake stream = new StreamActionsFake();
 MethodsForFunctions.saveSystem(new FileSystem("Диск1", 2, 4, 8);
 
 ArrayList<String> expected = new ArrayList<String>();
