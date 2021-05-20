@@ -4,7 +4,6 @@ import Structure.struct.FileSystem;
 import Structure.struct.iStreamActions;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Scanner;
 
 public class ActualProgram {
 
@@ -14,23 +13,16 @@ public class ActualProgram {
         stream.println("\nДоброе утро! Вас приветствует группа С18-501!" + "\n" + "Загружаем систему или создаем новую?");
         do {
             stream.println("(Введите СОЗДАТЬ СИСТЕМУ или ЗАГРУЗИТЬ СИСТЕМУ)")
-        }while(initialization(stream.getLine()));
-        while (init_flag == false) {
-            stream.println(w"(Введите СОЗДАТЬ СИСТЕМУ или ЗАГРУЗИТЬ СИСТЕМУ)");
-            String choice = stream.getLine();
-            init_flag = initialization(choice);
-            if (init_flag == false)
-                stream.println("Пожалуйста, соберитесь и дайте нормальный и связанный ответ.");
-        }
+        } while( initialization( stream.getLine() ) );
     }
 
     public static boolean initialization(String choice) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         var commandObject = monitor.runStart(choice);
-        if (commandObject == null) {
-            return false;
-        }
+        if (commandObject == null)
+            return true;
+
         commandObject.execute(monitor.fs);
-        return true;
+        return false;
     }
 
     public static void mainRealization(iStreamActions stream) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
