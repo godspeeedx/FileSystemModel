@@ -11,7 +11,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 public class CreateFileTest {
-
     // добавим первый элемент
     @Test
     public void check1() {
@@ -27,8 +26,6 @@ public class CreateFileTest {
         System.out.println("- Добавление в систему первого элемента");
         Assert.assertEquals(expected, actual.segments);
     }
-
-
     //добавление эллементов, чтобы максимально заполнить сегмент
     @Test
     public void check2() {
@@ -49,8 +46,6 @@ public class CreateFileTest {
         expected.get(0).currentDataNum = 3;
         Assert.assertEquals(expected, actual.segments);
     }
-
-
     //Добавление элементов, заполняющих более одного сегмента
     @Test
     public void check3() {
@@ -75,7 +70,6 @@ public class CreateFileTest {
         CreateFile.createFile(actual, "forth", 4);
         Assert.assertEquals(expected, actual.segments);
     }
-
     // добавим элемент, который есть в системе
     @Test
     public void check4() {
@@ -101,7 +95,6 @@ public class CreateFileTest {
         CreateFile.createFile(actual, "forth", 5);
         Assert.assertEquals(expected, actual.segments);
     }
-
     //добавим элемент, который больше свободного места
     @Test
     public void check5() {
@@ -127,7 +120,6 @@ public class CreateFileTest {
         CreateFile.createFile(actual, "fifth", 19);
         Assert.assertEquals(expected, actual.segments);
     }
-
     // Добавим элемент на место удалённого
     @Test
     public void check6() {
@@ -154,7 +146,6 @@ public class CreateFileTest {
         expected.get(0).dataRecords.set(1, new DataRecord("newsecond", 2));
         Assert.assertEquals(expected, actual.segments);
     }
-
     // Добавим элемент меньший чем удалённый, если после него идёт пустой
     @Test
     public void check7() {
@@ -186,7 +177,6 @@ public class CreateFileTest {
         expected.get(0).dataRecords.get(1).size = 4;
         Assert.assertEquals(expected, actual.segments);
     }
-
     // когда добавляли прошлый, в след место увеличилось, добавим туда элемент
     @Test
     public void check8() {
@@ -223,8 +213,6 @@ public class CreateFileTest {
         Assert.assertEquals(expected, actual.segments);
 
     }
-
-
     //добавим элемент, который займёт всю память
     @Test
     public void check9() {
@@ -261,7 +249,6 @@ public class CreateFileTest {
         expected.get(1).currentDataNum = 2;
         Assert.assertEquals(expected, actual.segments);
     }
-
     // попробуем добавить ещё один элемент, когда вся память занята
     @Test
     public void check10() {
@@ -285,7 +272,6 @@ public class CreateFileTest {
         CreateFile.createFile(actual, "sadfsvdd", 1);
         Assert.assertEquals(expected, actual.segments);
     }
-
     // Полностью заполним систему
     @Test
     public void check11() {
@@ -311,7 +297,6 @@ public class CreateFileTest {
         System.out.println("P.S. Система зполнена в связи с тем, что все сегменты заполнены (т.е записано" +
                 "максимальное количество файлов в сегментах)");
     }
-
     // попробовать добавить ещё один элемент, когда все сегменты в системе заполнены
     @Test
     public void check12() {
@@ -336,7 +321,6 @@ public class CreateFileTest {
         CreateFile.createFile(actual2, "ggvj", 1);
         Assert.assertEquals(expected2, actual2.segments);
     }
-
     //Так как система заполнена, но память ещё есть, удалим последний и добавим больший файл
     @Test
     public void check13() {
@@ -359,7 +343,6 @@ public class CreateFileTest {
         System.out.println("P.S. Система зполнена в связи с тем, что все сегменты заполнены (т.е записано" +
                 "максимальное количество файлов в сегментах)");
     }
-
     //система заполнена, удалим последний и добавим меньший
     @Test
     public void check14() {
@@ -386,7 +369,6 @@ public class CreateFileTest {
         expected2.get(1).dataRecords.get(1).size = 3;
         Assert.assertEquals(expected2, actual2.segments);
     }
-
    /* @Test
     public void createFile() {
         //Создали одну файловую систему
@@ -517,5 +499,4 @@ public class CreateFileTest {
         Assert.assertEquals(expected2, actual2.segments);
 
     }*/
-
 }

@@ -5,6 +5,7 @@ import Monitor.ActualProgram;
 import Monitor.MonitorClass;
 import Monitor.RegistredCommands;
 import Structure.struct.FileSystem;
+import Structure.struct.iStreamActions;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,6 +14,21 @@ import java.lang.reflect.InvocationTargetException;
 public class ActualProgramTest {
     static FileSystem fs = new FileSystem("", 0, 0, 0);
     static MonitorClass monitor = new MonitorClass(fs);
+
+    @Test
+    public void checkMainRealization1() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        StreamActionsFake stream = new StreamActionsFake();
+        ActualProgram.mainRealization(stream);
+        //Assert.assertEquals(stringListOutput.get);
+    }
+
+
+
+
+
+
+
+
 
     /**
      * Не работает, потому что Junit не умеет обрабатывать ввод пользователя
