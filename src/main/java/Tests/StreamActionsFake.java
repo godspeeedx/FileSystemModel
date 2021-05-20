@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class StreamActionsFake implements iStreamActions {
 
     ArrayList<String> stringListInput = new ArrayList<String>();
-    ArrayArrayListList<String> stringListOutput = new ArrayList<String>();
+    ArrayList<String> stringListOutput = new ArrayList<String>();
 
     public void println(String value) {
         print(value);
