@@ -116,6 +116,16 @@ public class MethodsForFunctions {
 
     }
 
+    public static boolean fileSizeLogic(int fileLength) {
+        if (fileLength < 0 || fileLength > FileSystem.systemSize) {
+            System.out.println("Длина файла некорректна");
+            System.out.println("Введите новую длину файла");
+            return true;
+        }
+        else
+            return false;
+    }
+
     public static String saveSystem(FileSystem fs) {
         GsonBuilder gsonBuilder = new GsonBuilder();
 
@@ -175,7 +185,7 @@ public class MethodsForFunctions {
         try {
             a = 1 - (((maxLength / space) + averageLength / maxLength) / 2);
         } catch (ArithmeticException ae) {
-            System.out.println("ArithmeticException occurred!");
+            System.out.println("ArithmeticException occurred!");  //неправильный вывод
             a = 0;
         }
         BigDecimal bd = new BigDecimal(Double.toString(a));

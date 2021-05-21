@@ -6,8 +6,7 @@ import Structure.struct.iStreamActions;
 import java.lang.reflect.InvocationTargetException;
 
 public class ActualProgram {
-
-    static MonitorClass monitor = new MonitorClass(new FileSystem("", 0, 0, 0));
+    static MonitorClass monitor = new MonitorClass(new FileSystem("", 0, 0, 0), new StreamActions());
 
     public static void init(iStreamActions stream) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         stream.println("\nДоброе утро! Вас приветствует группа С18-501!" + "\n" + "Загружаем систему или создаем новую?");
@@ -42,9 +41,8 @@ public class ActualProgram {
 
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         RegistredCommands.init();
-        iStreamActions stream = new StreamActions();
-        init(stream);
-        mainRealization(stream);
+        init(monitor.stream);
+        mainRealization(monitor.stream);
     }
 }
 
