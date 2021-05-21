@@ -56,7 +56,12 @@ public class ChangeFileSize extends BaseCommand implements iCommand {
     @Override
     public void readParameters() {
         this.fileName = monitor.readString("Введите имя файла");
-        this.fileLength = monitor.readFileSize("Введите длину файла");
+        boolean check = true;
+        int fileLength = 0;
+        do {
+            fileLength = monitor.readInt("Введите длину файла");
+        } while (MethodsForFunctions.fileSizeLogic(fileLength));
+        this.fileLength = fileLength;
 
     }
 }

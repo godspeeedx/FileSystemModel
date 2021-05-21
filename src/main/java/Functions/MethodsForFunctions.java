@@ -116,6 +116,16 @@ public class MethodsForFunctions {
 
     }
 
+    public static boolean fileSizeLogic(int fileLength) {
+        if (fileLength < 0 || fileLength > FileSystem.systemSize) {
+            System.out.println("Длина файла некорректна");
+            System.out.println("Введите новую длину файла");
+            return true;
+        }
+        else
+            return false;
+    }
+
     public static String saveSystem(FileSystem fs) {
         GsonBuilder gsonBuilder = new GsonBuilder();
 
