@@ -1,1 +1,1 @@
-{"systemName":"1","systemSize":1,"maxSegmentNum":11,"segments":[],"maxDataNum":1}
+{"systemName":"1","systemSize":100,"maxSegmentNum":2,"segments":[{"firstBlockNumber":0,"dataRecords":[{"type":true,"name":"1","size":2},{"type":true,"name":"3","size":2}],"currentDataNum":2},{"firstBlockNumber":0,"dataRecords":[],"currentDataNum":0}],"maxDataNum":2}

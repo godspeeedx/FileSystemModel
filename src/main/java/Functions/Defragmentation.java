@@ -25,20 +25,13 @@ public class Defragmentation extends BaseCommand implements iCommand {
     }
     @Override
     public void execute(FileSystem fs) {
-        if (MethodsForFunctions.defragExt(fs) != 0){
-            monitor.writeMessage("Степень фрагментации до дефрагментации "
-                    + MethodsForFunctions.defragExt(fs));
-            defragmentation(fs);
-            monitor.writeMessage("Степень фрагментации после дефрагментации "
-                    + MethodsForFunctions.defragExt(fs));
-            monitor.writeMessage(MethodsForFunctions.saveSystem(fs));
-
-        }
-        else{
-            monitor.writeMessage("Степень фрагментации "
-                    + MethodsForFunctions.defragExt(fs)+ ". Дефрагментация не нужна");
-        }
-
+        monitor.writeMessage("Степень фрагментации до дефрагментации "
+                + MethodsForFunctions.defragExt(fs));
+        defragmentation(fs);
+        monitor.writeMessage("Степень фрагментации после дефрагментации "
+                + MethodsForFunctions.defragExt(fs));
+        monitor.writeMessage(MethodsForFunctions.saveSystem(fs));
+        monitor.writeMessage("Готово!");
     }
 
     @Override
@@ -75,7 +68,6 @@ public class Defragmentation extends BaseCommand implements iCommand {
                         if(segment.currentDataNum < fs.maxDataNum) {
                             DataRecord pin = findPin(fs, dataRecord, i, j);
                             if (pin != null) {
-                                dataRecord.setName(pin.getName());
                                 dataRecord.setType(true);
                                 dataRecord.setName(pin.getName());
                                 segment.currentDataNum++;
@@ -237,32 +229,26 @@ public class Defragmentation extends BaseCommand implements iCommand {
             segmentsToClean.clear();
         }
         public void deleteHoles(FileSystem fs) {
-            for(int i=0; i<fs.segments.size();i++) {
-                Segment segment = fs.segments.get(i);
-                for (int j = 0; j < segment.dataRecords.size(); j++) {
-                    DataRecord dataRecord = segment.dataRecords.get(j);
-                    if (!dataRecord.isType()){
-                        segment.dataRecords.remove(dataRecord);
-                    }
-                }
+            for (Segment segment : fs.segments) {
+                segment.dataRecords.removeIf(dataRecord -> !dataRecord.isType());
             }
         }
 
         public void squeezeFS(FileSystem fs){
             int maxDataNum = fs.maxDataNum;
             int currentSegmentIndex=0;
+            int lastSegmentIndex=fs.segments.size()-1;
             flag:
             for(Segment segment : fs.segments){
                 while(segment.currentDataNum<maxDataNum){
-                    int lastSegmentIndex=fs.segments.size()-1;
+                    if(currentSegmentIndex==lastSegmentIndex)
+                        break flag;
                     while(fs.segments.get(lastSegmentIndex).currentDataNum==0){
                         lastSegmentIndex--;
-                        if(lastSegmentIndex<0){
+                        if(lastSegmentIndex==currentSegmentIndex){
                             break flag;
                         }
                     }
-                    if(currentSegmentIndex==lastSegmentIndex)
-                        break flag;
                     int lastDataIndex = fs.segments.get(lastSegmentIndex).dataRecords.size()-1;
                     DataRecord dataRecordToReplace = fs.segments.get(lastSegmentIndex).dataRecords.get(lastDataIndex);
                     segment.dataRecords.add(dataRecordToReplace);
