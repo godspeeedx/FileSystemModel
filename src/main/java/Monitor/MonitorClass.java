@@ -43,45 +43,9 @@ public class MonitorClass implements iMonitor {
         return stream.getLine();
     }
 
-    public boolean readFileSizeLogic(int fileLength) {
-            if (fileLength < 0 || fileLength > FileSystem.systemSize) {
-                writeMessage("Длина файла некорректна");
-                writeMessage("Введите новую длину файла");
-                return true;
-            }
-            else
-                return false;
-    }
-
-    @Override
-    public int readFileSize(String userMessage) {
-        writeMessage(userMessage);
-        boolean check = true;
-        int fileLength = 0;
-        do{
-            fileLength = stream.nextInt();
-        } while (readFileSizeLogic(fileLength));
-        return fileLength;
-    }
-
     @Override
     public int readInt(String userMessage){
         writeMessage(userMessage);
         return stream.nextInt();
-    }
-
-    @Override
-    public int readSystemSize(String userMessage) {
-        return readInt(userMessage);
-    }
-
-    @Override
-    public int readMaxSegmentNum(String userMessage) {
-        return readInt(userMessage);
-    }
-
-    @Override
-    public int readMaxDataNum(String userMessage) {
-        return readInt(userMessage);
     }
 }
