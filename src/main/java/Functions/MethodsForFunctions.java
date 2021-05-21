@@ -55,7 +55,46 @@ public class MethodsForFunctions {
         return findName;
     }
 
+    //максимальное место для вставки
+    public static int maxToInsert(FileSystem fs) {
+        int maximum = 0;
+        for (int i = 0; i < fs.segments.size(); i++) {
+            for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) {
+                if (fs.segments.get(i).dataRecords.get(j).type == false) {
+                    if (maximum < fs.segments.get(i).dataRecords.get(j).size) {
+                        maximum = fs.segments.get(i).dataRecords.get(j).size;
+                    }
+                }
+            }
+        }
+        if(maxToInsertInEnd(fs) > maximum){
+            return maxToInsertInEnd(fs);
+        }
+        return maximum;
+    }
 
+    public static int maxToInsertInEnd(FileSystem fs) {
+        int max = 0;
+        if (fs.segments.size() != 0) {
+            int occupied = 0;
+            for (int i = 0; i < fs.segments.size(); i++) {
+                for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) {
+                    occupied += fs.segments.get(i).dataRecords.get(j).size;
+                }
+            }
+            int i = fs.segments.size() - 1;
+            int j = fs.segments.get(i).dataRecords.size() - 1;
+            if(!fs.segments.get(i).dataRecords.get(j).type){
+                occupied -= fs.segments.get(i).dataRecords.get(j).size;
+            }
+            max = FileSystem.systemSize - occupied;
+            return max;
+        }
+        max = FileSystem.systemSize;
+        return max;
+    }
+
+    // сколько всего места
     public static int howMuchSpace(FileSystem fs) {
         int space = 0;
         for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
@@ -121,8 +160,7 @@ public class MethodsForFunctions {
             System.out.println("Длина файла некорректна");
             System.out.println("Введите новую длину файла");
             return true;
-        }
-        else
+        } else
             return false;
     }
 

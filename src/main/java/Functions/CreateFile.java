@@ -16,7 +16,7 @@ public class CreateFile extends BaseCommand implements iCommand {
 
     public static int createFile(FileSystem fs, String filename, int length) {
         if (!MethodsForFunctions.checkFileExist(fs, filename)) {
-            if (length <= MethodsForFunctions.howMuchSpace(fs)) {
+            if (length <= MethodsForFunctions.maxToInsert(fs)) {
                 for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
                     for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) { // пробег по сзаписям  в сегменте
                         if (!fs.segments.get(i).dataRecords.get(j).type) { // вставляем на удалённое, когда всё совпало
