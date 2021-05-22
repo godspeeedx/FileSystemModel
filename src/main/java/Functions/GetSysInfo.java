@@ -18,7 +18,7 @@ public class GetSysInfo extends BaseCommand implements iCommand {
             check = "Дефрагментация не необходима";
         }
         return "Осталось вот столько памяти " + space +
-                "\nМаксимальный кусок,который можно вставить " + maxLength +
+                "\nМаксимальный файл,который можно вставить " + maxLength +
                 "\nСтепень фрагментации " + MethodsForFunctions.defragExt(fs)+
         "\n" + check;
     }

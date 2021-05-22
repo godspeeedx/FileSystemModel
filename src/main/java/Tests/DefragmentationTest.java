@@ -5,10 +5,9 @@ import Functions.Defragmentation;
 import Functions.DeleteFile;
 import Functions.MethodsForFunctions;
 import Structure.struct.FileSystem;
-import Structure.struct.Segment;
 import org.junit.Assert;
 import org.junit.Test;
-import java.util.ArrayList;
+
 
 public class DefragmentationTest {
 
