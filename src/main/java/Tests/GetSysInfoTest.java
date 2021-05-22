@@ -85,4 +85,24 @@ public class GetSysInfoTest {
 
         Assert.assertEquals(expected, GetSysInfo.getInfo(actual));
     }
+    @Test
+    public void get6(){
+        FileSystem actual = new FileSystem("Test1", 20, 2, 2);
+        CreateFile.createFile(actual, "1", 6);
+        CreateFile.createFile(actual, "2", 2);
+        CreateFile.createFile(actual, "3", 5);
+        CreateFile.createFile(actual, "4", 5);
+        DeleteFile.deleteFile(actual,"2");
+        DeleteFile.deleteFile(actual,"1");
+        DeleteFile.deleteFile(actual,"4");
+
+        GetSysInfo.getInfo(actual);
+        String expected = """
+                Осталось вот столько памяти 15
+                Максимальный кусок,который можно вставить 7
+                Степень фрагментации 0.4571
+                Дефрагментация необходима""";
+
+        Assert.assertEquals(expected, GetSysInfo.getInfo(actual));
+    }
 }
