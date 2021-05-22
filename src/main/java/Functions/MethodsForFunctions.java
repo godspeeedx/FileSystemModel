@@ -205,7 +205,7 @@ public class MethodsForFunctions {
     }
 
     public static double averageLengthToInsert(FileSystem fs) {
-        if (maxLengthToInsert(fs) == howMuchSpace(fs)) return maxLengthToInsert(fs);
+        if (maxToInsert(fs) == howMuchSpace(fs)) return maxToInsert(fs);
         int sum = 0;
         int n = 0;
         for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
@@ -225,7 +225,7 @@ public class MethodsForFunctions {
 
     public static double defragExt(FileSystem fs) {
         int space = MethodsForFunctions.howMuchSpace(fs);
-        double maxLength = MethodsForFunctions.maxLengthToInsert(fs);
+        double maxLength = MethodsForFunctions.maxToInsert(fs);
         double averageLength = MethodsForFunctions.averageLengthToInsert(fs);
         if (maxLength == 0) return 0;
         double a;
