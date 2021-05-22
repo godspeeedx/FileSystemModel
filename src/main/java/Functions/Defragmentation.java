@@ -258,6 +258,7 @@ public class Defragmentation extends BaseCommand implements iCommand {
                 }
                 currentSegmentIndex++;
             }
+            fs.segments.removeIf(segment -> segment.currentDataNum==0);
         }
     }
 }
