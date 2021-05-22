@@ -281,8 +281,9 @@ public class DefragmentationTest {
         System.out.println("Before " + a+", After "+ b);
         // проверка
 
+
+        Assert.assertNotEquals(a,b);
         Assert.assertEquals(0.0,b,0.0001);
-        Assert.assertEquals(a,b,0.1);
 
     }
 }
