@@ -36,8 +36,6 @@ public class ChangeFileSize extends BaseCommand implements iCommand {
     public void execute(FileSystem fs) {
         readParameters();
         int create = changeFileSize(fs, this.fileName, this.fileLength);
-
-        int isFileCreate = CreateFile.createFile(fs, this.fileName, this.fileLength);
         if (create == 0) {
             monitor.writeMessage("Размер файла успешно изменён");
         } else if (create == -1) {
