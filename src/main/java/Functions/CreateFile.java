@@ -16,7 +16,7 @@ public class CreateFile extends BaseCommand implements iCommand {
 
     public static int createFile(FileSystem fs, String filename, int length) {
         if (!MethodsForFunctions.checkFileExist(fs, filename)) {
-            if (length <= MethodsForFunctions.howMuchSpace(fs)) {
+            if (length <= MethodsForFunctions.maxToInsert(fs)) {
                 for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
                     for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) { // пробег по сзаписям  в сегменте
                         if (!fs.segments.get(i).dataRecords.get(j).type) { // вставляем на удалённое, когда всё совпало
@@ -74,23 +74,28 @@ public class CreateFile extends BaseCommand implements iCommand {
                    // Segment.lastBlockNumber += length;
                     return 0;
                 }
-                int dataSize = fs.segments.get(fs.segments.size() - 1).dataRecords.size() - 1;
+               // int dataSize = fs.segments.get(fs.segments.size() - 1).dataRecords.size() - 1;
                 int segmentSize = fs.segments.size() - 1;
                 if (fs.segments.get(segmentSize).dataRecords.size() != fs.maxDataNum) {
+                    if(MethodsForFunctions.maxToInsertInEnd(fs) >= length) {
                         fs.segments.get(segmentSize).dataRecords.add(new DataRecord(filename, length));
                         fs.segments.get(segmentSize).currentDataNum += 1;
-                      //  Segment.lastBlockNumber += length;
                         return 0; // файл успешно создан
+                    }
+                      //  Segment.lastBlockNumber += length;
+                        return -1; // не хватило места
                 }
                 // Если добавляем в новый сегмент
                 else {
                     if (fs.segments.size() < fs.maxSegmentNum) {
-                        fs.segments.add(new Segment(fs.maxDataNum));
+                        if(MethodsForFunctions.maxToInsertInEnd(fs) >= length) {
+                            fs.segments.add(new Segment(fs.maxDataNum));
                             fs.segments.get(segmentSize + 1).dataRecords.add(new DataRecord(filename, length));
                             fs.segments.get(segmentSize + 1).currentDataNum += 1;
-                         //   Segment.lastBlockNumber += length;
+                            //   Segment.lastBlockNumber += length;
                             return 0; // файл успешно создан
-                        // не хватило места
+                        }
+                        return -1; // не хватило места
                     }
                     else {
                         return -1; // не хватило места

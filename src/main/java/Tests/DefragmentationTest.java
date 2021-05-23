@@ -5,10 +5,9 @@ import Functions.Defragmentation;
 import Functions.DeleteFile;
 import Functions.MethodsForFunctions;
 import Structure.struct.FileSystem;
-import Structure.struct.Segment;
 import org.junit.Assert;
 import org.junit.Test;
-import java.util.ArrayList;
+
 
 public class DefragmentationTest {
 
@@ -281,8 +280,9 @@ public class DefragmentationTest {
         System.out.println("Before " + a+", After "+ b);
         // проверка
 
+
+        Assert.assertNotEquals(a,b);
         Assert.assertEquals(0.0,b,0.0001);
-        Assert.assertEquals(a,b,0.1);
 
     }
 }

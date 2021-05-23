@@ -1,6 +1,8 @@
 package Functions;
 
+import Structure.struct.DataRecord;
 import Structure.struct.FileSystem;
+import Structure.struct.Segment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -55,7 +57,46 @@ public class MethodsForFunctions {
         return findName;
     }
 
+    //максимальное место для вставки
+    public static int maxToInsert(FileSystem fs) {
+        int maximum = 0;
+        for (int i = 0; i < fs.segments.size(); i++) {
+            for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) {
+                if (fs.segments.get(i).dataRecords.get(j).type == false) {
+                    if (maximum < fs.segments.get(i).dataRecords.get(j).size) {
+                        maximum = fs.segments.get(i).dataRecords.get(j).size;
+                    }
+                }
+            }
+        }
+        if(maxToInsertInEnd(fs) > maximum){
+            return maxToInsertInEnd(fs);
+        }
+        return maximum;
+    }
 
+    public static int maxToInsertInEnd(FileSystem fs) {
+        int max = 0;
+        if (fs.segments.size() != 0) {
+            int occupied = 0;
+            for (int i = 0; i < fs.segments.size(); i++) {
+                for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) {
+                    occupied += fs.segments.get(i).dataRecords.get(j).size;
+                }
+            }
+            int i = fs.segments.size() - 1;
+            int j = fs.segments.get(i).dataRecords.size() - 1;
+            if(!fs.segments.get(i).dataRecords.get(j).type){
+                occupied -= fs.segments.get(i).dataRecords.get(j).size;
+            }
+            max = FileSystem.systemSize - occupied;
+            return max;
+        }
+        max = FileSystem.systemSize;
+        return max;
+    }
+
+    // сколько всего места
     public static int howMuchSpace(FileSystem fs) {
         int space = 0;
         for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
@@ -69,59 +110,65 @@ public class MethodsForFunctions {
     }
 
     public static boolean possibleToInsert(FileSystem fs, int length) {
-        if (length <= MethodsForFunctions.howMuchSpace(fs)) {
-            for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
-                for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) { // пробег по сзаписям  в сегменте
-                    if (!fs.segments.get(i).dataRecords.get(j).type) { // вставляем на удалённое, когда всё совпало
-                        if (length == fs.segments.get(i).dataRecords.get(j).size) {
-                            return true;
-                        } // случ когда вставляем в самый конец при том, что она была удалена
-                        else if (length < fs.segments.get(i).dataRecords.get(j).size) {
-                            if ((j != fs.maxDataNum - 1 && fs.segments.get(i).dataRecords.size() - j == 1) ||
-                                    (j == fs.maxDataNum - 1 && fs.segments.size() - i == 1)) {
-                                return true; // файл успешно создан
-                            } // если меньшк и следующий удалён
-                            else {
-                                if (j + 1 < fs.segments.get(i).dataRecords.size()
-                                        && !fs.segments.get(i).dataRecords.get(j + 1).type) {
-                                    return true; // файл успешно создан
+            if (length <= MethodsForFunctions.maxToInsert(fs)) {
+                for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
+                    for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) { // пробег по сзаписям  в сегменте
+                        if (!fs.segments.get(i).dataRecords.get(j).type) { // вставляем на удалённое, когда всё совпало
+                            if (length == fs.segments.get(i).dataRecords.get(j).size) {
+                                return true;
+                            } // случ когда вставляем в самый конец при том, что она была удалена
+                            else if (length < fs.segments.get(i).dataRecords.get(j).size) {
+                                if ((j != fs.maxDataNum - 1 && fs.segments.get(i).dataRecords.size() - j == 1) ||
+                                        (j == fs.maxDataNum - 1 && fs.segments.size() - i == 1)) {
+                                    return true;
+                                } // если меньшк и следующий удалён
+                                else {
+                                    if (j + 1 < fs.segments.get(i).dataRecords.size()
+                                            && !fs.segments.get(i).dataRecords.get(j + 1).type) {
+                                       return true;
+                                    }
                                 }
-                            }
 
-                        } else {
-                            if (i + 1 == fs.segments.size() && j + 1 == fs.segments.get(i).dataRecords.size()) {
-                                if (MethodsForFunctions.howMuchSpace(fs) >= length) {
-                                    return true; // файл успешно создан
+                            } else {
+                                if (i + 1 == fs.segments.size() && j + 1 == fs.segments.get(i).dataRecords.size()) {
+                                    if (MethodsForFunctions.howMuchSpace(fs) >= length) {
+                                       return true;
+                                    }
                                 }
                             }
                         }
                     }
                 }
+                // Если добавляем в последний сегмент
+                if (fs.segments.size() == 0) {
+                    return true;
+                }
+                int segmentSize = fs.segments.size() - 1;
+                if (fs.segments.get(segmentSize).dataRecords.size() != fs.maxDataNum) {
+                    return true; // файл успешно создан
+                }
+                // Если добавляем в новый сегмент
+                else {
+                    if (fs.segments.size() < fs.maxSegmentNum) {
+                        return true; // файл успешно создан
+
+                    }
+                    else {
+                        return false; // не хватило места
+                    }
+                }
+            } else {
+                return false;// не хватило места
             }
-            // Если добавляем в последний сегмент
-            if (fs.segments.size() == 0) {
-                return true;
-            }
-            int segmentSize = fs.segments.size() - 1;
-            if (fs.segments.get(segmentSize).dataRecords.size() != fs.maxDataNum) {
-                return true;
-            }
-            // Если добавляем в новый сегмент
-            else {
-                return fs.segments.size() < fs.maxSegmentNum; // файл успешно создан
-            }
-        } else {
-            return false;// не хватило места
+
         }
 
-    }
 
     public static boolean fileSizeLogic(int fileLength) {
         if (fileLength < 0 || fileLength > FileSystem.systemSize) {
             System.out.println("Длина файла некорректна");
             return true;
-        }
-        else
+        } else
             return false;
     }
 
@@ -157,7 +204,7 @@ public class MethodsForFunctions {
     }
 
     public static double averageLengthToInsert(FileSystem fs) {
-        if (maxLengthToInsert(fs) == howMuchSpace(fs)) return maxLengthToInsert(fs);
+        if (maxToInsert(fs) == howMuchSpace(fs)) return maxToInsert(fs);
         int sum = 0;
         int n = 0;
         for (int i = 0; i < fs.segments.size(); i++) { // пробег по всем сегментам
@@ -177,7 +224,7 @@ public class MethodsForFunctions {
 
     public static double defragExt(FileSystem fs) {
         int space = MethodsForFunctions.howMuchSpace(fs);
-        double maxLength = MethodsForFunctions.maxLengthToInsert(fs);
+        double maxLength = MethodsForFunctions.maxToInsert(fs);
         double averageLength = MethodsForFunctions.averageLengthToInsert(fs);
         if (maxLength == 0) return 0;
         double a;
