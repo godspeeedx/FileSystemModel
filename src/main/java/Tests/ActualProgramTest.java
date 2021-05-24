@@ -56,10 +56,6 @@ public class ActualProgramTest {
         stream.stringListInput.add("2");
         stream.stringListInput.add("4");
         stream.stringListInput.add("8");
-
-
-        //ActualProgram.init(stream);
-        //Assert.assertEquals(expected, stream.stringListOutput);
     }
 
     //Проверка ввод ЗАГРУЗИТЬ СИСТЕМУ
@@ -79,9 +75,5 @@ public class ActualProgramTest {
         stream.stringListInput.add("ЗАГРУЗИТЬ СИСТЕМУ");
         stream.stringListInput.add("ДИСКЕТА101");
         stream.stringListInput.add("Диск1");
-
-
-        //ActualProgram.init(stream);
-        //Assert.assertEquals(expected, stream.stringListOutput);
     }
 }
