@@ -1,0 +1,1 @@
+{"systemName":"Test","systemSize":20,"maxSegmentNum":3,"segments":[{"firstBlockNumber":0,"dataRecords":[{"type":true,"name":"First","size":1},{"type":true,"name":"Second","size":2},{"type":true,"name":"Third","size":3}],"currentDataNum":3},{"firstBlockNumber":0,"dataRecords":[{"type":true,"name":"Forth","size":4}],"currentDataNum":1}],"maxDataNum":3}

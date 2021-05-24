@@ -19,16 +19,16 @@ public class CreateSystem extends BaseCommand implements iCommand {
     @Override
     public void execute(FileSystem fs) {
         readParameters();
-        FileSystem buf = new FileSystem(systemName, systemSize, maxSegmentNum, maxDataNum);
-        fs.copy(buf);
+        fs.copy(new FileSystem(systemName, systemSize, maxSegmentNum, maxDataNum)); //
         monitor.writeMessage("Готово!");
+        monitor.writeMessage(MethodsForFunctions.saveSystem(fs));
     }
 
     @Override
     public void readParameters() {
         this.systemName = monitor.readString("Введите название системы:");
-        this.systemSize = monitor.readSystemSize("Введите размер диска:");
-        this.maxSegmentNum = monitor.readMaxSegmentNum("Введите максимальное число сегментов:");
-        this.maxDataNum = monitor.readMaxDataNum("Введите максимальное число записей в каждом сегменте:");
+        this.systemSize = monitor.readInt("Введите размер диска:");
+        this.maxSegmentNum = monitor.readInt("Введите максимальное число сегментов:");
+        this.maxDataNum = monitor.readInt("Введите максимальное число записей в каждом сегменте:");
     }
 }

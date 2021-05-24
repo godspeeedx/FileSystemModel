@@ -17,9 +17,11 @@ public class DeleteFile extends BaseCommand implements iCommand {
         boolean findName = false;
         flag:
         for (int i = 0; i < fs.segments.size(); i++) {
-            for (int j = 0; j < fs.segments.get(i).datas.size(); j++) {
-                if (fs.segments.get(i).datas.get(j).getName().equals(fileName)) {
-                    fs.segments.get(i).datas.get(j).type = false;
+            for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) {
+                if (fs.segments.get(i).dataRecords.get(j).type &&
+                fs.segments.get(i).dataRecords.get(j).getName().equals(fileName)) {
+                    fs.segments.get(i).dataRecords.get(j).type = false;
+                    fs.segments.get(i).currentDataNum -= 1;
                     findName = true;
                     break flag;
                 }
@@ -36,6 +38,7 @@ public class DeleteFile extends BaseCommand implements iCommand {
         } else {
             monitor.writeMessage("Файл не был найден");
         }
+        monitor.writeMessage(MethodsForFunctions.saveSystem(fs));
     }
 
     @Override

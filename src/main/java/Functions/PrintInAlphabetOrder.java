@@ -1,6 +1,6 @@
 package Functions;
 
-import Structure.struct.Data;
+import Structure.struct.DataRecord;
 import Structure.struct.FileSystem;
 import Structure.struct.iCommand;
 import Structure.struct.iMonitor;
@@ -18,25 +18,25 @@ public class PrintInAlphabetOrder extends BaseCommand implements iCommand {
         if (fs.segments.size() == 0) {
             return "Файловая система пуста";
         } else {
-            ArrayList<Data> arrayList = new ArrayList<Data>();
+            ArrayList<DataRecord> arrayList = new ArrayList<>();
             for (int i = 0; i < fs.segments.size(); i++) {
-                for (int j = 0; j < fs.segments.get(i).datas.size(); j++) {
-                    if (fs.segments.get(i).datas.get(j).type) {
-                        String name = fs.segments.get(i).datas.get(j).name;
-                        int length = fs.segments.get(i).datas.get(j).size;
-                        arrayList.add(new Data(name, length));
+                for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) {
+                    if (fs.segments.get(i).dataRecords.get(j).type) {
+                        String name = fs.segments.get(i).dataRecords.get(j).name;
+                        int length = fs.segments.get(i).dataRecords.get(j).size;
+                        arrayList.add(new DataRecord(name, length));
                     }
                 }
             }
             if (arrayList.size() == 0) {
                 return "Файловая система пуста";
             } else {
-                String files = "";
-                Collections.sort(arrayList, Comparator.comparing(Data::getName));
-                for (int i = 0; i < arrayList.size(); i++) {
-                    files += arrayList.get(i).name + " " + arrayList.get(i).size + "\n";
+                StringBuilder files = new StringBuilder();
+                arrayList.sort(Comparator.comparing(DataRecord::getName));
+                for (DataRecord dataRecord : arrayList) {
+                    files.append(dataRecord.name).append(" ").append(dataRecord.size).append("\n");
                 }
-                return files;
+                return files.toString();
             }
         }
     }

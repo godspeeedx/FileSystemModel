@@ -16,19 +16,18 @@ public class Print extends BaseCommand implements iCommand {
             return "Файловая система пуста";
         } else {
             boolean isFile = false;
-            String string = "";
+            StringBuilder string = new StringBuilder();
             for (int i = 0; i < fs.segments.size(); i++) {
-                string += "Сегмент " + i + "\n";
-                for (int j = 0; j < fs.segments.get(i).datas.size(); j++) {
-                    if (fs.segments.get(i).datas.get(j).type) {
+                string.append("Сегмент ").append(i).append("\n");
+                for (int j = 0; j < fs.segments.get(i).dataRecords.size(); j++) {
+                    if (fs.segments.get(i).dataRecords.get(j).type) {
                         isFile = true;
-                        string += fs.segments.get(i).datas.get(j).name +
-                                " " + fs.segments.get(i).datas.get(j).size + "\n";
+                        string.append(fs.segments.get(i).dataRecords.get(j).name).append(" ").append(fs.segments.get(i).dataRecords.get(j).size).append("\n");
                     }
                 }
             }
             if (isFile) {
-                return string;
+                return string.toString();
             } else {
                 return "Файловая система пуста";
             }
