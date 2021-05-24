@@ -28,7 +28,7 @@ public class DownloadSystem extends BaseCommand implements iCommand {
             FileSystem buf = gson.fromJson(json, FileSystem.class);
             fs.copy(buf);
         } catch (IOException ex) {
-            System.out.println("Не удалось загрузить систему, введите повторное имя системы" ); //Неправильный вывод
+            System.out.println("Не удалось загрузить систему, введите имя системы повторно" ); //Неправильный вывод
             return false;
         }
         return true;
