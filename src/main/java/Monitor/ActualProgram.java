@@ -33,8 +33,10 @@ public class ActualProgram {
             stream.print("$");
             String command = stream.getLine();
 
-            if (command.equals("ВЫЙТИ"))
+            if (command.equals("ВЫЙТИ")){
+                stream.print("Сеанс закончен, всего доброго!");
                 break;
+            }
 
             var commandObject = monitor.runFunction(command);
             if (commandObject != null)
