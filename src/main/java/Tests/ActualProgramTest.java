@@ -24,16 +24,14 @@ public class ActualProgramTest {
         ArrayList<String> expected = new ArrayList<String>();
         expected.add("(Если не помните команду, вводите ПОМОГИТЕ)");
         expected.add("$");
-        expected.add("(Если не помните команду, вводите ПОМОГИТЕ)");
-
+        expected.add("$");
+        expected.add("Сеанс закончен, всего доброго!");
         stream.stringListInput.add("БЕЛЕБЕРДА");
         stream.stringListInput.add("ВЫЙТИ");
 
 
-        //ActualProgram.mainRealization(stream);
-        //Assert.assertEquals(expected, stream.stringListOutput);
-
-
+        ActualProgram.mainRealization(stream);
+        Assert.assertEquals(expected, stream.stringListOutput);
     }
     //Проверка ввода Белеберда и СОЗДАТЬ СИСТЕМУ
     @Test
